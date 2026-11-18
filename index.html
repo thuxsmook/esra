@@ -422,6 +422,43 @@ body:has(#woHost) .bkpill,body:has(#htHost) .bkpill,body:has(#hlHost) .bkpill{di
 @media (max-width:600px){.dt,.dt input{font-size:16px}.dp-body{padding:14px 14px 80px}.dt .c-date{width:120px;min-width:120px}.dt .c-day{left:120px;width:54px;min-width:54px}.dt input[type="date"]{padding:0 8px}}
 @media (max-width:600px){.top-actions .ghost:not(.icon-btn){flex:1 1 auto;white-space:nowrap}}
 @media (max-width:420px){.top-actions{gap:6px}.top-actions .ghost:not(.icon-btn){padding:9px 8px;font-size:13.5px}}
+
+/* ---------- sağlık durumu ---------- */
+.hpick-btn{font-size:14px}
+#hChips{margin-bottom:8px}
+.chip.hsel{font-weight:600}
+.hcat h4{margin:16px 0 8px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+#hSearch{margin-bottom:4px}
+.hbox{display:flex;flex-direction:column;gap:7px;border:1px solid var(--line2);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.hbox p{margin:0;font-size:14.5px;line-height:1.5}
+.hbox.hb2,.hbox.hb3{border-color:var(--warn)}
+.hbox.hb3{border-width:2px}
+.lv{flex:none;align-self:flex-start;display:inline-block;font-size:11.5px;font-weight:700;border-radius:6px;padding:3px 8px;letter-spacing:.02em;white-space:nowrap;font-family:var(--sans)}
+.lv0{background:var(--surface2);color:var(--ok)}
+.lv1{background:var(--surface2);color:var(--champ)}
+.lv2{background:var(--warn);color:var(--bg)}
+.lv3{background:#c0392b;color:#fff}
+.hred{margin-top:10px;border-left:3px solid var(--warn);padding:9px 12px;background:var(--surface);border-radius:0 12px 12px 0}
+.hred b{font-size:13.5px;color:var(--warn)}
+.hred p{margin:4px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+details.hc{margin-top:10px;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden}
+details.hc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px}
+details.hc summary::-webkit-details-marker{display:none}
+details.hc summary::after{content:"";flex:none;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin:0 4px 4px 2px;transition:transform .15s}
+details.hc[open] summary::after{transform:rotate(-135deg);margin-bottom:-2px}
+.hc-n{flex:1;min-width:0;font-family:var(--serif);font-size:19px;font-weight:500;line-height:1.25}
+.hc-b{padding:0 14px 14px}
+.hc-w{margin:0 0 4px;color:var(--muted);font-size:14px;line-height:1.5}
+.hc-g{margin-top:12px}
+.hc-g b{display:block;font-size:13px;color:var(--rose);letter-spacing:.03em;margin-bottom:4px}
+.hc-g p{margin:0;font-size:14px;line-height:1.55}
+.hc-g ul{margin:0;padding-left:18px}
+.hc-g li{font-size:14px;line-height:1.5;margin:4px 0}
+.hc-g.stop b{color:var(--warn)}
+.hc-app{margin:14px 0 0;font-size:13.5px;line-height:1.5;color:var(--champ)}
+.hc-app b{margin-right:2px}
+.hc-src{margin:6px 0 0;font-size:12px;color:var(--faint)}
+@media (max-width:520px){details.hc summary{flex-wrap:wrap}.hc-n{flex-basis:100%}}
 </style>
 <script>try{var _t=localStorage.getItem('esra:theme');if(_t)document.documentElement.setAttribute('data-theme',JSON.parse(_t));}catch(e){}</script>
 </head>
@@ -479,14 +516,15 @@ body:has(#woHost) .bkpill,body:has(#htHost) .bkpill,body:has(#hlHost) .bkpill{di
     </div>
 
     <div class="field">
-      <span class="lbl">Hedef</span>
-      <div class="chips" data-key="goal">
+      <span class="lbl">Hedef (birden fazla seçilebilir)</span>
+      <div class="chips" data-key="goal" data-multi="5">
         <button type="button" class="chip" data-v="yag">Yağ yakımı</button>
         <button type="button" class="chip" data-v="rekomp">Sıkılaşma</button>
         <button type="button" class="chip" data-v="kas">Kas kazanımı</button>
         <button type="button" class="chip" data-v="guc">Kuvvet</button>
         <button type="button" class="chip" data-v="kondisyon">Kondisyon</button>
       </div>
+      <p class="hint" id="goalHint"></p>
     </div>
 
     <div class="field">
@@ -519,8 +557,8 @@ body:has(#woHost) .bkpill,body:has(#htHost) .bkpill,body:has(#hlHost) .bkpill{di
     </div>
 
     <div class="field">
-      <span class="lbl">Öncelikli bölge (en fazla 2)</span>
-      <div class="chips" data-key="focus" data-multi="2">
+      <span class="lbl">Öncelikli bölge (en fazla 3)</span>
+      <div class="chips" data-key="focus" data-multi="3">
         <button type="button" class="chip" data-v="glute">Kalça</button>
         <button type="button" class="chip" data-v="legs">Bacak</button>
         <button type="button" class="chip" data-v="back">Sırt</button>
@@ -549,6 +587,14 @@ body:has(#woHost) .bkpill,body:has(#htHost) .bkpill,body:has(#hlHost) .bkpill{di
         <button type="button" class="chip" data-v="shoulder">Omuz</button>
       </div>
       <p class="hint">Seçilen bölgeyi zorlayan hareketler programa girmez.</p>
+    </div>
+
+    <div class="field">
+      <span class="lbl">Bir rahatsızlık var mı?</span>
+      <div class="chips" id="hChips"></div>
+      <button type="button" class="ghost hpick-btn" id="hPickBtn">+ Rahatsızlık seç</button>
+      <input class="text" id="hnote" maxlength="160" autocomplete="off" placeholder="Listede olmayan durum ya da not (ilaç, ameliyat yılı…)" style="margin-top:8px">
+      <p class="hint" id="hHint">Skolyozdan organ yetmezliğine kadar; seçilen her durum için program otomatik uyarlanır ve yol haritası programın başında çıkar.</p>
     </div>
 
     <div class="field">
@@ -767,8 +813,644 @@ var GLUTE_FIN = [
   'Kalça yakıcı: 3 tur, her bacak 15 kickback, 30 sn yan plank'
 ];
 
+/* ---------- sağlık durumu: rahatsızlıklar ve yol haritası ---------- */
+/* lvl: 0 uyarlamayla uygun · 1 uzman görüşü önerilir · 2 hekim onayı şart · 3 klinik gözetim gerekir
+   fx: programa otomatik etkiler
+     lim:[bölge]  ilgili bölgeyi çok zorlayan hareketler çıkar (diz/bel/omuz)
+     strict:{b:1} omurgaya az da olsa yük bindiren hareketler de çıkar
+     rm:[id]      belirli hareketler çıkar
+     noImp        zıplama ve darbeli hareket yok
+     cap          sertlik Sert ile sınırlı, tükenmeye gidilmez, nefes tutma yok (en az 2 tekrar kala)
+     noHiit       HIIT yok · hiit1: HIIT haftada en fazla 1, en düşük seviye
+     noFin        bitiriş yok
+     noDeficit    kalori açığı yok · adjMin: açık bu orandan derin olmaz
+     noProt       protein hedefi gösterilmez (ckd/hd) · prot:[alt,üst] g/kg
+     noWater      su hedefi gösterilmez · hideKcal: beslenme rakamları hiç gösterilmez
+     preg         gebelikte sırtüstü/karın üstü ve yüklü karın hareketleri çıkar */
+var HC_FLEX = ['cr_c', 'hkr', 'ab_wh'];
+var HC_INV = ['pike', 'pu_dec'];
+var HC_PREG = ['bp_bb', 'bp_db', 'fly_db', 'lc_lying', 'lc_slider', 'gb_w', 'frog', 'deadbug', 'cr_c', 'hkr', 'ab_wh', 'sissy', 'nordic', 'pike', 'pu_dec', 'sq_bb', 'dl_bb'];
+var HC_CATS = [
+  ['omurga', 'Omurga ve bel'], ['eklem', 'Eklem, kemik ve kas'], ['kalp', 'Kalp ve damar'], ['metab', 'Metabolik ve hormonal'],
+  ['akciger', 'Akciğer'], ['organ', 'Organ yetmezliği ve nakil'], ['kadin', 'Kadın sağlığı'], ['diger', 'Diğer']
+];
+var HC_LVL = ['Uyarlamayla uygun', 'Uzman görüşü önerilir', 'Hekim onayı şart', 'Klinik gözetim gerekir'];
+function HCd(id, cat, lvl, n, al, w, b, d, a, s, src, fx){ return {id:id, cat:cat, lvl:lvl, n:n, al:al, w:w, b:b, d:d, a:a, s:s, src:src, fx:fx || {}}; }
+var EMG = "acil durumda 112";
+var HC = [
+  /* ---------- omurga ---------- */
+  HCd('skolyoz', 'omurga', 1, "Skolyoz", "omurga eğriliği",
+    "Omurganın yana eğrilip kendi etrafında dönmesi. Derecesi röntgende Cobb açısıyla ölçülür: kabaca 20°'ye kadar hafif, 20–40° orta, 40°'nin üstü ileri.",
+    "Cobb açısını, eğriliğin ilerleyip ilerlemediğini, korse kullanımını ve ağrı olup olmadığını öğren. Büyümesi süren gençlerde ve 30°'nin üstündeki eğriliklerde skolyoza özel egzersiz (ör. Schroth) bilen fizyoterapist eşliğinde başlanır.",
+    ["Genel kuvvet antrenmanı güvenlidir ve önerilir; tek taraflı hareketlerle iki taraf arasındaki kuvvet farkını kapat.",
+     "Gövde dayanıklılığı: plank, yan plank, Pallof press, bird-dog.",
+     "Kalça ve sırt kaslarını güçlendir; nefes çalışması ve göğüs kafesi mobilitesi ekle.",
+     "Ağrı yoksa yük kademeli artırılır; her seans ağrıyı 0–10 ölçeğinde sor."],
+    ["Ağrı varken omurgaya dikey ağır yük bindiren barbell hareketleri (back squat, deadlift, ağır overhead press). Hafif eğrilikte ve ağrısız dönemde, teknik oturduktan sonra kademeli eklenebilir.",
+     "Ağırlıkla hızlı gövde döndürme, yüklü öne eğilmeler.",
+     "Eğriliği “düzeltmek” için ağrıya rağmen zorlayıcı esnetmeler."],
+    ["Bacaklara yayılan ağrı, uyuşma ya da güç kaybı.",
+     "Eforla orantısız nefes darlığı (ileri eğriliklerde göğüs kafesi etkilenebilir).",
+     "Omuz ya da kalça asimetrisinde gözle görülür artış → hekim kontrolü."],
+    "SOSORT 2016 skolyoz tedavi kılavuzu", {lim:['back']}),
+
+  HCd('skolyoz_op', 'omurga', 2, "Skolyoz ameliyatı (omurga füzyonu)", "platin vida spinal füzyon",
+    "Eğri bölgenin vida ve çubuklarla sabitlenmesi. Sabitlenen bölüm artık hareket etmez; yük komşu omurlara ve kalçaya biner.",
+    "Cerrahın yazılı onayı olmadan başlanmaz. İlk aylarda eğilme, kaldırma ve dönme genellikle kısıtlıdır; ağır kuvvet ve temaslı sporlara dönüş çoğu zaman 6–12 ay sonradır. Kesin süreyi ve kısıtları cerrah belirler.",
+    ["Yürüyüş, sabit bisiklet, cerrah izin verdiyse yüzme ile başla.",
+     "Hareketi kalçadan yap (hip hinge), omurga nötr; kalça ve bacak kuvveti öncelik.",
+     "İzometrik gövde dayanıklılığı: plank varyasyonları, Pallof press, bird-dog.",
+     "Makineler ve destekli hareketler; yük yavaş ve kademeli artar."],
+    ["Omurgaya dikey ağır yük (barbell squat, deadlift, ağır overhead press).",
+     "Yüklü öne eğilme, mekik, ağırlıkla gövde döndürme.",
+     "Cerrah izin verene kadar zıplama, darbeli koşu, temaslı ve düşme riski yüksek sporlar."],
+    ["Yeni ya da artan sırt ağrısı, ameliyat bölgesinde kayma ya da tık hissi.",
+     "Bacaklarda uyuşma, güç kaybı.",
+     "Ateşle birlikte yara bölgesinde kızarıklık ya da akıntı → hekim."],
+    "", {strict:{b:1}, noImp:true, cap:true}),
+
+  HCd('bel_risk', 'omurga', 1, "Bel ağrısı / bel fıtığı riski", "kronik bel ağrısı disk dejenerasyonu bel düzleşmesi",
+    "Disk yıpranması ya da tekrarlayan bel ağrısı; tanı konmuş fıtık yok ama risk var.",
+    "Ağrının ne zaman arttığını sor (oturunca, eğilince, ayakta). Bacağa, özellikle diz altına yayılan ağrı varsa önce hekim ya da fizyoterapist.",
+    ["Gövde dayanıklılığı: McGill üçlüsü (değiştirilmiş curl-up, yan plank, bird-dog), Pallof press.",
+     "Kalça kuvveti: hip thrust, köprü; kalçadan eğilmeyi (hip hinge) öğret.",
+     "Günlük yürüyüş; uzun oturmayı 30–45 dakikada bir böl.",
+     "Ağrı ertesi gün artmıyorsa yük kademeli artırılır."],
+    ["Sabah kalkar kalkmaz ağır öne eğilme (diskler sabah daha fazla su tutar, yüke daha hassastır).",
+     "Yüklü öne eğilme ile dönmenin birlikte yapılması (ör. ağırlığı yana dönerek kaldırma).",
+     "Teknik oturmadan ağır deadlift ve back squat."],
+    ["Bacağa yayılan, diz altına inen ağrı; uyuşma, karıncalanma.",
+     "Ayakta güç kaybı (parmak ucunda ya da topuk üstünde yürüyememe) → hekim.",
+     "Kasık ya da makat bölgesinde uyuşma, idrar ya da dışkı kontrolünde bozulma → " + EMG + "."],
+    "", {lim:['back']}),
+
+  HCd('bel_fitik', 'omurga', 2, "Bel fıtığı (tanılı)", "lomber disk hernisi siyatik",
+    "Disk çekirdeğinin dışarı taşıp sinire baskı yapması; bacağa yayılan siyatik ağrı yapabilir.",
+    "MR raporunu ve hekim ya da fizyoterapistin önerisini iste. Ağrının şiddetli olduğu akut dönemde salon programı değil fizyoterapi önceliklidir.",
+    ["Ağrıyı azaltan pozisyon ve hareketleri bul; bazı kişilerde geriye esneme rahatlatır, hangisinin uygun olduğunu fizyoterapist belirler.",
+     "Yürüyüş ve nötr omurgayla gövde dayanıklılığı (bird-dog, yan plank, dead bug).",
+     "Kalça ve bacak kuvveti: makineler, destekli hareketler; yük kademeli.",
+     "Ağrı bacaktan bele doğru çekiliyorsa (merkezileşme) iyi işarettir; bacağa doğru yayılıyorsa (periferleşme) yükü azalt."],
+    ["Yüklü öne eğilme ve dönme, mekik, ağırlıklı crunch.",
+     "Ağrı kontrol altına alınana kadar ağır barbell squat ve deadlift, zıplama ve koşu.",
+     "Uzun süre hareketsiz oturma."],
+    ["Bacaktaki ağrı, uyuşma ya da güçsüzlüğün artması → hekim.",
+     "Kasık ya da makat uyuşması, idrar-dışkı kontrolü kaybı, iki bacakta birden güçsüzlük (kauda ekina sendromu) → " + EMG + "."],
+    "", {lim:['back'], rm:HC_FLEX, noImp:true}),
+
+  HCd('bel_op', 'omurga', 2, "Bel fıtığı ameliyatı geçmişi", "mikrodiskektomi diskektomi",
+    "Fıtıklaşan disk parçasının alınması (çoğunlukla mikrodiskektomi). İlk aylarda yeniden fıtıklaşma riski daha yüksektir.",
+    "Cerrahın izin verdiği tarihi ve kısıtları öğren. Hafif egzersize çoğu zaman birkaç hafta içinde, ağır kuvvete genellikle 6–12 hafta sonra dönülür; kesin süreyi cerrah belirler.",
+    ["Yürüyüşle başla, süreyi her gün biraz artır.",
+     "Nötr omurgayla gövde dayanıklılığı, kalça kuvveti, hip hinge öğretimi.",
+     "Makineler ve destekli hareketlerle düşük yükten kademeli ilerleme."],
+    ["Cerrah onayına kadar yüklü öne eğilme, mekik, dönerek kaldırma, ağır barbell squat ve deadlift.",
+     "İzin verilene kadar zıplama, koşu ve temaslı spor.",
+     "Nefes tutarak maksimal kaldırma."],
+    ["Ameliyat öncesine benzer bacak ağrısının geri gelmesi, uyuşma, güç kaybı → hekim.",
+     "Yara yerinde akıntı, kızarıklık, ateş → hekim.",
+     "Kasık ya da makat uyuşması, idrar-dışkı kontrolü kaybı → " + EMG + "."],
+    "", {strict:{b:1}, rm:HC_FLEX, noImp:true, cap:true}),
+
+  HCd('boyun', 'omurga', 1, "Boyun fıtığı / boyun düzleşmesi", "servikal disk boyun ağrısı",
+    "Boyun omurları arasındaki diskin sinire baskı yapması; kola yayılan ağrı ve uyuşma yapabilir.",
+    "Kola yayılan ağrı, uyuşma ya da elde güçsüzlük varsa önce hekim ya da fizyoterapist.",
+    ["Derin boyun kasları (çeneyi içe çekme) ve kürek kemiği kasları: face pull, row, reverse fly.",
+     "Hareketlerde boyun nötr; bakış 1–2 m ileride yere.",
+     "Göğüs açma ve sırtın üst bölümü için mobilite."],
+    ["Ağrı varken ensede bar taşıyan back squat; ense arkası press ve pulldown.",
+     "Ağır shrug, ağrı yapan baş üstü press, amuda kalkma; mekikte başı elle çekme."],
+    ["Kola yayılan ve artan ağrı, uyuşma, elde güç kaybı → hekim.",
+     "Yürürken dengesizlik, elde beceriksizlik (düğme iliklemede zorlanma): omurilik baskısı belirtisi olabilir → hekim."],
+    "", {rm:['sq_bb', 'pike', 'sp_db']}),
+
+  HCd('spondil', 'omurga', 2, "Bel kayması (spondilolistezis)", "spondiloliz omur kayması",
+    "Bir omurun altındaki omura göre öne kayması; derecesi röntgende belirlenir.",
+    "Kaymanın derecesini ve hekimin kısıtlarını öğren. 2. derece ve üstünde ya da bacağa yayılan belirti varsa fizyoterapist eşliğinde başla.",
+    ["Nötr omurga ile gövde dayanıklılığı: dead bug, bird-dog, yan plank, Pallof press.",
+     "Kalça kuvveti ve kalça bükücü kasların esnetilmesi.",
+     "Makineler ve destekli hareketler."],
+    ["Belin geriye aşırı bükülmesi: back extension, köprü pozu, baş üstü ağır press yaparken beli çukurlaştırma.",
+     "Ağır barbell squat ve deadlift, zıplama ve darbeli hareketler."],
+    ["Bacağa yayılan ağrı, uyuşma, güç kaybı ya da ağrının belirgin artması → hekim.",
+     "Kasık ya da makat uyuşması, idrar-dışkı kontrolü kaybı → " + EMG + "."],
+    "", {lim:['back'], rm:['bext', 'ab_wh', 'pike'], noImp:true}),
+
+  /* ---------- eklem, kemik, kas ---------- */
+  HCd('diz_op', 'eklem', 2, "Diz ameliyatı (çapraz bağ / menisküs)", "ÖÇB acl menisküs artroskopi",
+    "Ön çapraz bağ ameliyatı ya da menisküs onarımı/kesisi sonrası dönem.",
+    "Fizyoterapistin protokolünü ve hangi aşamada olduğunu öğren. Çapraz bağ sonrası pivot gerektiren spora dönüş genellikle en az 9 ay ve kuvvet testleriyle (iki bacak arasındaki fark %10'un altında) yapılır.",
+    ["Ameliyatlı bacakta kuvvet: leg press, step-up, hamstring curl, kalça kasları.",
+     "Tek bacak hareketleriyle iki taraf arasındaki farkı kapat.",
+     "Denge ve eklem pozisyon hissi (propriosepsiyon) çalışmaları."],
+    ["Fizyoterapistin yasakladığı açılar; ör. menisküs onarımı sonrası erken dönemde derin, yüklü çömelme.",
+     "Dönüş kriterleri sağlanana kadar zıplama, ani dönüş, kesme hareketleri."],
+    ["Dizde şişlik, ısı artışı, boşalma ya da kilitlenme hissi → fizyoterapist/hekim.",
+     "Baldırda ağrı, şişlik, kızarıklık (pıhtı şüphesi) → hekim."],
+    "", {lim:['knee'], noImp:true}),
+
+  HCd('diz_artroz', 'eklem', 1, "Diz kireçlenmesi (osteoartrit)", "gonartroz kireç",
+    "Diz kıkırdağının yıpranması; ağrı, sabah tutukluğu ve şişlik yapar. Egzersiz, diz kireçlenmesi tedavisinin temelidir.",
+    "Hekim tanısını ve varsa protez planını öğren.",
+    ["Haftada 2–3 gün ön ve arka bacak ile kalça kuvveti: sınırlı açıda leg press, step-up, köprü, kablo abduction.",
+     "Darbesiz kardiyo: bisiklet, yüzme, eliptik.",
+     "Ağrı takibi: egzersiz sırasında ağrı 10 üzerinden 5'i geçmesin ve ertesi gün başlangıç düzeyine dönsün.",
+     "Kilo fazlası varsa kilo kaybı ağrıyı azaltır."],
+    ["Zıplama, ağrı yapıyorsa koşu, derin ve ağır çömelme.",
+     "Ağrı 24 saatte geçmediği halde aynı yükle devam etmek."],
+    ["Dizde ani şişlik, kızarıklık, ısı ya da kilitlenme → hekim.",
+     "Ağrının dinlenirken ve gece belirgin artması → hekim."],
+    "", {lim:['knee'], noImp:true}),
+
+  HCd('diz_on', 'eklem', 0, "Ön diz ağrısı (kondromalazi)", "patellofemoral kondromalazi patella diz kapağı",
+    "Diz kapağının arkasında, merdiven inerken ya da çömelirken artan ağrı.",
+    "Ağrıyı artıran hareketleri ve yükleri öğren; şişlik ya da kilitlenme varsa hekim.",
+    ["Kalça kasları (abduction, köprü, hip thrust) ve ön bacak kuvveti.",
+     "Ağrısız açıda çömelme, derinliği kademeli artırma.",
+     "Ağrının 10 üzerinden 3–4'ü geçmeyeceği yükte çalış."],
+    ["Ağrı geçene kadar ağrılı açıda ağır leg extension, derin ve ağır çömelme, zıplama."],
+    ["Dizde şişlik, kilitlenme, boşalma hissi → hekim."],
+    "", {lim:['knee']}),
+
+  HCd('kalca', 'eklem', 2, "Kalça protezi / kalça kireçlenmesi", "koksartroz kalça artrozu",
+    "Kalça ekleminin protezle değiştirilmesi ya da kalça kıkırdağının yıpranması.",
+    "Protezde cerrahın kısıtlarını öğren: ameliyat yöntemine göre ilk haftalarda kalçayı 90°'den fazla bükmek, bacağı orta hattan karşıya geçirmek ve içe döndürmek yasak olabilir.",
+    ["Kalça kasları (köprü, abduction), ön ve arka bacak kuvveti, denge çalışmaları.",
+     "Darbesiz kardiyo: sele yüksek bisiklet, yüzme, yürüyüş.",
+     "Yükü kademeli artır."],
+    ["Cerrahın yasakladığı açılar: derin çömelme, bacak bacak üstüne atma, alçak yerden kalkma.",
+     "Zıplama, koşu, temaslı ve düşme riskli sporlar."],
+    ["Kasıkta ani ağrı, bacakta kısalık ya da dışa dönme (çıkık şüphesi) → acil.",
+     "Baldırda şişlik-ağrı ya da ani nefes darlığı (pıhtı) → " + EMG + "."],
+    "", {lim:['knee'], noImp:true, rm:['frog', 'lp_hi', 'sissy']}),
+
+  HCd('omuz', 'eklem', 1, "Omuz sıkışması / rotator manşet sorunu", "impingement tendinit omuz yırtığı",
+    "Omuz tendonlarının sıkışması ya da yıpranması; kolu kaldırırken ağrı yapar.",
+    "Kolda güç kaybı, gece uyandıran ağrı varsa ya da ağrı düşme sonrası başladıysa önce hekim (yırtık olabilir).",
+    ["Rotator manşet: bantla dışa döndürme, yan yatarak dışa döndürme.",
+     "Kürek kemiği kasları: face pull, row, reverse fly.",
+     "Ağrısız açıda itiş; landmine press ve makine press iyi seçenekler."],
+    ["Ağrılı açıda baş üstü press, upright row, ense arkası press ve pulldown.",
+     "Derin dips, geniş tutuşla derin bench."],
+    ["Kolda belirgin güç kaybı, kolu kaldıramama → hekim.",
+     "Gece uykudan uyandıran ağrı, kola yayılan uyuşma → hekim."],
+    "", {lim:['shoulder']}),
+
+  HCd('omuz_cikik', 'eklem', 1, "Omuz çıkığı geçmişi", "instabilite luksasyon bankart",
+    "Omuzun en az bir kez yerinden çıkması; özellikle gençlerde tekrar çıkma riski yüksektir.",
+    "Ameliyat olduysa (Bankart vb.) cerrahın kısıtlarını öğren.",
+    ["Rotator manşet ve kürek kemiği kuvveti; kontrollü, yavaş tekrarlar.",
+     "Kapalı zincir hareketler (şınav, plank) ve ağrısız açıda itiş-çekiş."],
+    ["Kolu yana açıp dışa döndüren uç pozisyonlar: ense arkası press ve pulldown, derin dumbbell fly, derin dips.",
+     "Ağırlığı bırakır gibi kontrolsüz indirme, ani yüklenme."],
+    ["Omuzda kayma ya da çıkacak gibi olma, ani ağrı → hareketi bırak, hekim.",
+     "Kolda uyuşma → hekim."],
+    "", {lim:['shoulder'], rm:['fly_db', 'pike']}),
+
+  HCd('osteoporoz', 'eklem', 1, "Kemik erimesi (osteoporoz / osteopeni)", "kemik yoğunluğu menopoz",
+    "Kemik yoğunluğunun azalması; en sık omurga, kalça ve el bileğinde kırık riski artar.",
+    "Kemik yoğunluğu ölçümünü (T-skoru) ve kırık geçmişini sor. Omurga kırığı geçmişi varsa fizyoterapist eşliğinde başla.",
+    ["Haftada en az 2 gün kuvvet antrenmanı: squat, hinge, lunge, köprü, row; yük kademeli artar.",
+     "Haftada en az 2 gün denge çalışması; kırıkların çoğu düşmeyle olur.",
+     "Sırt kasları ve duruş; eğilirken omurgayı değil kalçayı kullan.",
+     "Kalsiyum, D vitamini ve yeterli protein (miktarı hekim belirler)."],
+    ["Yüklü öne eğilme ve dönme: mekik, crunch, ayak parmağına uzanma, ağırlıkla gövde döndürme.",
+     "Düşme riski yüksek aktiviteler; kırık geçmişi varsa zıplama."],
+    ["Ani başlayan sırt ağrısı (omurga kırığı olabilir) → hekim.",
+     "Boyda kısalma, kamburlukta artış → hekim."],
+    "Too Fit To Fracture uzlaşısı (Osteoporosis Canada)", {lim:['back'], rm:HC_FLEX, noImp:true}),
+
+  HCd('romatizma', 'eklem', 1, "Romatizmal hastalık (romatoid artrit, ankilozan spondilit vb.)", "romatoid artrit ankilozan lupus",
+    "Bağışıklık sisteminin eklemlere saldırdığı iltihaplı hastalıklar; atak ve sakin dönemler olur.",
+    "Atak mı sakin dönem mi olduğunu ve ilaçlarını öğren (uzun süreli kortizon kemiği zayıflatabilir).",
+    ["Sakin dönemde düzenli kuvvet ve aerobik egzersiz; eklem çevresindeki kaslar güçlenir.",
+     "Sabah tutukluğu için mobilite; ankilozan spondilitte omurga esnekliği ve duruş egzersizleri.",
+     "Darbesiz kardiyo."],
+    ["Atak döneminde sıcak, şiş, kızarık eklemi yüklemek; o dönemde yalnızca hafif hareket açıklığı.",
+     "Ağrıyı 24 saatten uzun artıran yük."],
+    ["Yeni şişen, kızaran, ısınan eklem; ateş → hekim.",
+     "Dinlenmeyle geçmeyen ağrı → hekim."],
+    "", {noImp:true}),
+
+  HCd('fibro', 'eklem', 1, "Fibromiyalji", "yaygın ağrı",
+    "Yaygın kas-iskelet ağrısı, yorgunluk ve uyku bozukluğuyla giden kronik durum.",
+    "Ağrı ve yorgunluk düzeyini, iyi ve kötü günlerini öğren.",
+    ["Çok düşük başla, yavaş ilerle: önce düşük-orta yoğunlukta aerobik (yürüyüş, havuz, bisiklet).",
+     "Hafif kuvvet antrenmanı; tükenmeye gitme.",
+     "İyi günde fazla yüklenip sonraki günleri kaybetmemek için sabit, düzenli program."],
+    ["Yüksek yoğunluk, HIIT ve tükenme setleri (alevlenme yapabilir)."],
+    ["Egzersizden sonra 24–48 saatten uzun süren belirgin ağrı artışı → yükü azalt."],
+    "", {cap:true, noHiit:true, noFin:true}),
+
+  /* ---------- kalp ve damar ---------- */
+  HCd('tansiyon', 'kalp', 1, "Yüksek tansiyon (hipertansiyon)", "hipertansiyon tansiyon ilacı",
+    "Dinlenme tansiyonunun sürekli 130/80 mmHg ve üzerinde olması.",
+    "İlaçlarını ve tansiyon değerlerini sor. Kontrol altında değilse (160/100 ve üzeri) yoğun antrenmana başlamadan hekim onayı al. Antrenman öncesi tansiyonu ölç: 180/110 ve üzerindeyse o gün antrenman yapılmaz, hekime yönlendirilir.",
+    ["Haftada 5–7 gün orta yoğunlukta aerobik (yürüyüş, bisiklet); dinlenme tansiyonunu ortalama 5–7 mmHg düşürür.",
+     "Haftada 2–3 gün kuvvet antrenmanı; orta yük, kaldırırken nefes ver.",
+     "Uzun soğuma: tansiyon ilaçlarıyla ani durmak baş dönmesi yapabilir.",
+     "Beta bloker kullanıyorsa nabız yanıltıcıdır; yoğunluğu konuşabilme ve algılanan zorlukla ayarla."],
+    ["Nefes tutma (Valsalva), tükenmeye kadar setler, çok ağır izometrik tutuşlar.",
+     "Baş aşağı pozisyonlar: amuda kalkma, ayaklar yüksek şınav."],
+    ["Şiddetli baş ağrısı, göğüs ağrısı, bulanık görme, baş dönmesi → dur.",
+     "Antrenman sırasında ölçülen tansiyon 250/115'i geçerse dur."],
+    "ACSM hipertansiyon egzersiz önerileri", {cap:true, rm:HC_INV, hiit1:true}),
+
+  HCd('koroner', 'kalp', 2, "Kalp krizi, stent ya da bypass geçmişi", "koroner arter hastalığı anjiyo",
+    "Kalbi besleyen damarlarda daralma; kalp krizi, stent ya da bypass geçirmiş olabilir.",
+    "Kardiyoloğun yazılı onayı şart. Mümkünse önce kardiyak rehabilitasyon programını tamamlasın; efor testi sonucunu ve güvenli nabız aralığını iste. Dil altı ilacı varsa antrenmanda yanında olsun.",
+    ["10 dk ısınma ve 10 dk soğuma.",
+     "Orta yoğunlukta aerobik: 6–20 Borg ölçeğinde algılanan zorluk 11–14 (hafif ile biraz zor arası), konuşabilir tempo.",
+     "Kuvvet antrenmanı: hafif-orta yük, 10–15 tekrar, nefes tutmadan.",
+     "Bypass sonrası göğüs kemiği kaynayana kadar (cerrahın söylediği süre, çoğu zaman 6–8 hafta) ağır itiş ve çekiş yok."],
+    ["Yüksek yoğunluklu interval, maksimal kaldırma, nefes tutma.",
+     "Soğukta ani ağır efor; yemekten hemen sonra yoğun egzersiz."],
+    ["Göğüste baskı ya da ağrı, kola, çeneye, sırta yayılan ağrı; orantısız nefes darlığı, soğuk terleme, baş dönmesi → hemen dur. Dinlenince 5 dakikada geçmezse 112.",
+     "Düzensiz ya da çok hızlı kalp atışı → dur, hekim."],
+    "ACSM ve kardiyak rehabilitasyon uygulamaları", {cap:true, noHiit:true, noFin:true, rm:HC_INV}),
+
+  HCd('aritmi', 'kalp', 2, "Ritim bozukluğu / kalp pili", "aritmi atriyal fibrilasyon pacemaker ICD çarpıntı",
+    "Kalbin düzensiz, çok hızlı ya da yavaş atması; kalp pili ya da şok cihazı (ICD) takılı olabilir.",
+    "Kardiyolog onayı ve önerilen nabız sınırı. ICD varsa cihazın şok verdiği nabız eşiğini öğren; antrenman nabzı bunun en az 10–20 atım altında kalmalı.",
+    ["Yoğunluğu nabızla değil algılanan zorlukla (konuşabilir tempo) ayarla; atriyal fibrilasyonda nabız ölçümü yanıltıcıdır.",
+     "Uzun ısınma ve soğuma; orta yoğunluk.",
+     "Kalp pili yeni takıldıysa ilk haftalarda o taraftaki kolu omuz hizasının üstüne kaldırma ve ağır itme yok (süreyi kardiyolog söyler)."],
+    ["Yüksek yoğunluk ve nefes tutma; kalp pili tarafında ağır göğüs/omuz hareketleri, cihaza darbe.",
+     "Kafein ya da enerji içeceğiyle antrenman (çarpıntıyı tetikleyebilir)."],
+    ["Çarpıntı, baş dönmesi, bayılacak gibi olma, göğüs ağrısı → dur.",
+     "ICD şok verdiyse antrenman biter, kardiyoloğa haber verilir; birden fazla şok ya da bilinç kaybı → 112."],
+    "", {cap:true, noHiit:true, noFin:true}),
+
+  HCd('kalp_diger', 'kalp', 3, "Diğer kalp hastalıkları (kapak, kalp kası, doğuştan)", "kardiyomiyopati aort darlığı kapak hastalığı",
+    "Kalp kapağı darlığı ya da yetmezliği, kalp kası hastalıkları (kardiyomiyopati) ve doğuştan kalp hastalıkları.",
+    "Kardiyolog onayı olmadan başlanmaz. Bazı durumlarda (ör. ileri aort darlığı, bazı kardiyomiyopati tipleri) yoğun egzersiz tehlikelidir; izin verilen yoğunluğu yazılı iste.",
+    ["Kardiyoloğun izin verdiği yoğunlukta, konuşabilir tempoda aerobik.",
+     "Hafif yükle kuvvet antrenmanı, nefes tutmadan."],
+    ["Yüksek yoğunluk, maksimal kaldırma, rekabet ve ani patlayıcı efor."],
+    ["Göğüs ağrısı, bayılma ya da bayılacak gibi olma, orantısız nefes darlığı, çarpıntı → dur; geçmezse 112."],
+    "", {cap:true, noHiit:true, noFin:true, noImp:true}),
+
+  HCd('dvt', 'kalp', 2, "Pıhtı öyküsü (DVT / akciğer embolisi)", "tromboz emboli varis toplardamar",
+    "Bacak toplardamarında pıhtı (derin ven trombozu) ya da pıhtının akciğere gitmesi (emboli) geçmişi.",
+    "Tedavinin hangi aşamada olduğunu ve kan sulandırıcı kullanıp kullanmadığını öğren; hekim onayıyla başla. Kan sulandırıcı kullanıyorsa o maddeyi de seç.",
+    ["Yürüyüş ve baldır kası çalışması (calf raise) dolaşımı destekler.",
+     "Hekim önerdiyse kompresyon çorabı.",
+     "Uzun süre hareketsiz kalmayı böl, yeterli sıvı al."],
+    ["Bacakta şişlik ve ağrı varken yoğun bacak antrenmanı."],
+    ["Tek bacakta yeni şişlik, ağrı, kızarıklık, ısı → hekim.",
+     "Ani nefes darlığı, göğüs ağrısı, kan tükürme → 112."],
+    "", {}),
+
+  HCd('inme', 'kalp', 2, "İnme (felç) geçmişi", "serebrovasküler beyin kanaması",
+    "Beyin damarında tıkanma ya da kanama sonrası kalıcı ya da geçici etkilenme.",
+    "Nörolog ya da fizik tedavi hekiminin onayı; vücudun hangi tarafının etkilendiğini, denge ve düşme riskini öğren. Tansiyon kontrolü kritiktir.",
+    ["Denge ve yürüme çalışmaları; tutunma yeri olan güvenli ortam.",
+     "Etkilenen tarafta kuvvet; makineler ve destekli hareketler.",
+     "Orta yoğunlukta aerobik; tansiyonu antrenman öncesi ölç."],
+    ["Nefes tutma, maksimal yük, yüksek yoğunluk; gözetimsiz, düşme riskli serbest ağırlık hareketleri."],
+    ["Yüzde kayma, kolda ya da bacakta ani güçsüzlük, konuşma bozukluğu, ani şiddetli baş ağrısı, ani görme kaybı → hemen 112."],
+    "", {cap:true, noHiit:true, noFin:true, noImp:true}),
+
+  /* ---------- metabolik ve hormonal ---------- */
+  HCd('t1d', 'metab', 2, "Tip 1 diyabet", "şeker hastalığı insülin",
+    "Pankreasın insülin üretmemesi; insülinle tedavi edilir. Egzersizde kan şekeri hızla düşebilir.",
+    "Diyabet ekibinin egzersiz planını öğren (insülin azaltma, ek karbonhidrat). Her antrenmanda ölçüm cihazı ve hızlı şeker (meyve suyu, glukoz tableti) hazır olsun. Antrenman öncesi kan şekeri: 90 mg/dL altı → 10–20 g hızlı karbonhidrat, 90'ı geçene kadar başlama · 90–125 → aerobik öncesi yaklaşık 10 g karbonhidrat, ağırlık ve HIIT başlanabilir · 126–180 → ideal, başla · 181–270 → başlanabilir, yoğun antrenman şekeri daha da yükseltebilir · 270 üstü → keton ölçülür; keton yüksekse egzersiz yok, diyabet ekibine haber.",
+    ["Ağırlık antrenmanı ve HIIT şekeri daha az düşürür, uzun kardiyo daha çok düşürür; ağırlığı kardiyodan önce yapmak düşüşü azaltabilir.",
+     "Antrenman sırasında ve sonrasında, gece dahil düşük şeker olabilir; sonrasında da ölç.",
+     "Antrenmanı her gün benzer saatte yapmak şeker yönetimini kolaylaştırır."],
+    ["Ölçüm yapmadan ve yanında şeker olmadan antrenman.",
+     "Son 24 saatte ağır hipoglisemi geçirdiyse yoğun egzersiz."],
+    ["Titreme, terleme, çarpıntı, bulanık düşünme (70 mg/dL altı): dur, 15 g hızlı şeker ver, 15 dk sonra tekrar ölç; düzelmezse tekrarla.",
+     "Bilinç bulanıklığı ya da bayılma → 112.",
+     "Bulantı, kusma, karın ağrısı, aseton kokulu nefes (ketoasidoz) → acil."],
+    "Riddell ve ark. 2017, Lancet Diabetes & Endocrinology uluslararası uzlaşı bildirisi", {}),
+
+  HCd('t2d', 'metab', 1, "Tip 2 diyabet / insülin direnci", "prediyabet gizli şeker metformin şeker hastalığı",
+    "Vücudun insüline yeterli yanıt verememesi. Egzersiz kan şekeri kontrolünü doğrudan iyileştirir.",
+    "İlaçlarını sor: insülin ya da sülfonilüre grubu (ör. gliklazid) kullananlarda egzersizde düşük şeker riski vardır. Gözde (retinopati), sinirde (nöropati) ya da böbrekte tutulum varsa hekim onayı al.",
+    ["Haftada en az 150 dk orta yoğunlukta aerobik; arka arkaya 2 günden fazla ara verme.",
+     "Haftada 2–3 gün kuvvet antrenmanı, büyük kas gruplarıyla.",
+     "Yemekten sonra 10–15 dk yürüyüş, kan şekerindeki yükselmeyi azaltır.",
+     "Ayak bakımı: uygun ayakkabı, ayakta yara ve kabarcık kontrolü."],
+    ["İleri göz tutulumu (proliferatif retinopati) varsa nefes tutma, ağır kaldırma, zıplama, baş aşağı pozisyonlar.",
+     "Ayakta his kaybı varsa uzun süreli darbeli koşu (yara riski)."],
+    ["Titreme, terleme, baş dönmesi (düşük şeker) → dur, hızlı şeker ver.",
+     "Ayakta yeni yara ya da renk değişikliği → hekim."],
+    "ADA (Amerikan Diyabet Derneği) fiziksel aktivite önerileri", {}),
+
+  HCd('hipotiroid', 'metab', 0, "Hipotiroidi / Haşimoto", "tiroid levotiroksin",
+    "Tiroid bezinin az çalışması; yorgunluk, üşüme ve kilo alma eğilimi yapar.",
+    "İlaçla değerlerin normal olup olmadığını öğren. Tedavisizse ve belirtiler belirginse önce hekim.",
+    ["Değerler normalse normal program uygulanır.",
+     "Tiroid ilacı sabah aç karnına alınır; sabah antrenmanında beslenme zamanını buna göre ayarla."],
+    ["Tedavi oturmadan yüksek yoğunluk (yorgunluk ve kas krampları artabilir)."],
+    ["Belirgin kas ağrısı, güçsüzlük, aşırı yorgunluk → hekim kontrolü."],
+    "", {}),
+
+  HCd('hipertiroid', 'metab', 2, "Hipertiroidi (tiroid fazla çalışması)", "graves guatr toksik nodül",
+    "Tiroid hormonunun fazla salgılanması; çarpıntı, kilo kaybı, titreme, sıcağa dayanamama.",
+    "Değerler yüksekken orta-yüksek yoğunlukta egzersiz yapılmaz; normale dönene kadar hekim onayıyla yalnızca hafif aktivite.",
+    ["Değerler normale dönünce program kademeli başlatılır.",
+     "Hastalık sürecinde kas ve kemik kaybı olabilir; kuvvet antrenmanı toparlanmaya yardım eder."],
+    ["Tedavi oturana kadar yüksek yoğunluk ve uzun yoğun kardiyo; sıcak ortam."],
+    ["Çarpıntı, düzensiz kalp atışı, göğüs ağrısı, aşırı terleme → dur, hekim."],
+    "", {cap:true, noHiit:true, noFin:true}),
+
+  HCd('pkos', 'metab', 0, "Polikistik over sendromu (PKOS)", "polikistik over insülin direnci",
+    "Hormonal düzensizlik; adet düzensizliği, insülin direnci ve kilo alma eğilimiyle sık birlikte görülür.",
+    "İnsülin direnci ve kullandığı ilaçları (metformin vb.) sor.",
+    ["Kuvvet antrenmanı ile aerobiğin birlikte yapılması insülin duyarlılığını artırır.",
+     "Düzenli program; çok düşük kalorili diyetlerden kaçın."],
+    ["Aşırı kalori açığı ve aşırı kardiyo."],
+    ["Adetin tamamen kesilmesi, belirgin yorgunluk → hekim."],
+    "", {}),
+
+  HCd('yagli_kc', 'metab', 1, "Yağlı karaciğer / kronik hepatit", "karaciğer yağlanması steatoz hepatit B C",
+    "Karaciğerde yağ birikmesi ya da süregen iltihap. Siroz yoksa egzersiz tedavinin temel parçasıdır.",
+    "Siroz olup olmadığını öğren; varsa Organ yetmezliği bölümündeki Siroz maddesini seç.",
+    ["Haftada 150–300 dk orta yoğunlukta aerobik ve 2–3 gün kuvvet antrenmanı.",
+     "Kilo fazlası varsa vücut ağırlığının %7–10'u kadar kayıp karaciğer yağını belirgin azaltır.",
+     "Alkol yok ya da en aza indirilir."],
+    ["Hekime sormadan bitkisel takviye, yağ yakıcı ve yüksek doz takviye (karaciğere zarar verebilir)."],
+    ["Sarılık, koyu idrar, karında şişlik → hekim."],
+    "", {}),
+
+  /* ---------- akciğer ---------- */
+  HCd('astim', 'akciger', 1, "Astım", "egzersiz astımı bronkospazm hırıltı",
+    "Hava yollarının daralması; egzersiz, soğuk ve kuru hava atakları tetikleyebilir.",
+    "Kurtarıcı ilacı (fısfıs) her antrenmanda yanında olsun; hekim önerdiyse egzersizden 10–15 dk önce kullanılır.",
+    ["10–15 dk kademeli ısınma.",
+     "Aralıklı (interval) çalışma çoğu zaman uzun sürekli kardiyodan daha iyi tolere edilir.",
+     "Soğuk havada ağız ve burnu atkıyla ört; kapalı, nemli ortamı tercih et."],
+    ["İlacı yanında olmadan antrenman; kontrolsüz astımla yoğun egzersiz.",
+     "Toz, duman, polenin yoğun olduğu ortam."],
+    ["Hırıltı, öksürük, göğüste sıkışma → dur, ilacını kullansın.",
+     "İlaca rağmen düzelmeyen nefes darlığı, konuşamama, dudaklarda morarma → 112."],
+    "", {}),
+
+  HCd('koah', 'akciger', 2, "KOAH (kronik obstrüktif akciğer hastalığı)", "amfizem kronik bronşit",
+    "Hava yollarında kalıcı daralma; egzersizi sınırlayan ana etken nefes darlığıdır.",
+    "Göğüs hastalıkları hekiminin onayı; mümkünse önce pulmoner rehabilitasyon. Oksijen kullanıyorsa egzersizdeki akış hızını hekim belirler. Parmaktan oksijen ölçer (pulse oksimetre) kullanılır.",
+    ["Haftada 3–5 gün aerobik; yoğunluğu nefes darlığıyla ayarla (0–10 ölçeğinde 4–6).",
+     "Kısa aralıklı çalışma (ör. 30 sn iş, 30 sn dinlenme) daha iyi tolere edilir.",
+     "Bacak ve kol kuvveti; büzük dudak nefesi, eforda nefes ver.",
+     "Oksijen satürasyonu %88'in üstünde kalmalı."],
+    ["Satürasyon %88'in altına düşerken devam etmek; nefes tutma.",
+     "Hava kirliliği, soğuk ve tozlu ortam; alevlenme (atak) döneminde antrenman."],
+    ["Satürasyonun %88'in altına düşmesi, dinlenmeyle geçmeyen nefes darlığı → dur.",
+     "Göğüs ağrısı, dudak ya da parmaklarda morarma, bilinç bulanıklığı → 112."],
+    "AACVPR pulmoner rehabilitasyon kılavuzu", {cap:true, noHiit:true, noFin:true, noImp:true}),
+
+  /* ---------- organ yetmezliği ve nakil ---------- */
+  HCd('kalp_yet', 'organ', 3, "Kalp yetmezliği", "EF düşük ejeksiyon fraksiyonu ödem",
+    "Kalbin vücuda yeterli kan pompalayamaması; nefes darlığı, yorgunluk, ayaklarda ödem.",
+    "Kardiyolog onayı ve stabil dönem şart; ideal olan önce kardiyak rehabilitasyon. NYHA sınıfını ve ilaçlarını öğren. Her seans öncesi sor: son 1–3 günde 2 kg ya da daha fazla kilo artışı, artan nefes darlığı ya da ödem varsa o gün antrenman yapılmaz, hekime haber verilir. Dinlenme nabzı 120'nin üstündeyse başlanmaz.",
+    ["Düşük-orta yoğunlukta aerobik: 6–20 Borg ölçeğinde 11–13 (konuşabilir tempo); 5–10 dakikalık bölümlerle başla, toplam süreyi artır.",
+     "Hafif yükle kuvvet antrenmanı: tek seferde küçük kas grupları, 10–15 tekrar, nefes tutmadan.",
+     "Uzun ısınma ve soğuma. Sıvı kısıtlaması varsa su miktarını hekim belirler."],
+    ["Yüksek yoğunluk, maksimal kaldırma, nefes tutma, uzun izometrik tutuşlar.",
+     "Sıcak ve nemli ortam; yatar pozisyondan hızlı kalkma."],
+    ["Nefes darlığında artış, göğüs ağrısı, baş dönmesi, düzensiz kalp atışı → dur.",
+     "Yatınca artan nefes darlığı, hızlı ödem ya da kilo artışı → hekim; ağır belirtide 112."],
+    "ESC Kalp Yetmezliği Derneği egzersiz uzlaşısı; ESSA pozisyon bildirisi", {cap:true, noHiit:true, noFin:true, noImp:true, noWater:true, noDeficit:true}),
+
+  HCd('kbh', 'organ', 2, "Kronik böbrek hastalığı / yetmezliği (diyaliz yok)", "KBH böbrek yetmezliği eGFR kreatinin",
+    "Böbrek işlevlerinin kalıcı olarak azalması (evre 1–5); kalp-damar riski ve kas kaybı artar.",
+    "Nefroloğun onayını ve hastalığın evresini öğren. Tansiyon ve kan şekeri kontrolü önemlidir.",
+    ["Orta yoğunlukta aerobik (algılanan zorluk 11–13) ve haftada 2–3 gün hafif-orta kuvvet antrenmanı; kas kaybına karşı kuvvet çalışması önemlidir.",
+     "Kademeli başla, yorgunluğa göre ayarla.",
+     "Beslenme: protein, tuz, potasyum ve fosfor miktarını nefrolog ya da diyetisyen belirler. Kılavuzlar evre 3–5'te proteini çoğu hastada kısıtlar (yaklaşık 0,55–0,8 g/kg); sporcu protein hedefleri uygulanmaz."],
+    ["Protein tozu, kreatin ve hekime sorulmamış takviyeler.",
+     "Ağrı kesici olarak NSAİİ grubu ilaçlar (ibuprofen, naproksen vb.) böbreğe zarar verebilir.",
+     "Aşırı sıcakta uzun antrenman ve fazla sıvı kaybı."],
+    ["Ödem, hızlı kilo artışı, nefes darlığı, idrarın belirgin azalması → hekim.",
+     "Kas krampları, çarpıntı (potasyum bozukluğu olabilir) → dur, hekim."],
+    "KDOQI 2020 böbrek hastalığında beslenme kılavuzu", {cap:true, noHiit:true, noProt:'ckd', noWater:true}),
+
+  HCd('diyaliz', 'organ', 3, "Böbrek yetmezliği – diyaliz", "hemodiyaliz periton diyalizi fistül",
+    "Böbrekler çalışmadığı için kanın makineyle (hemodiyaliz) ya da karın zarıyla (periton diyalizi) temizlenmesi.",
+    "Nefroloğun onayı şart. Hemodiyalizde antrenman diyaliz olmayan günlerde ya da diyaliz ekibinin uygun gördüğü şekilde yapılır (bazı merkezlerde diyaliz sırasında pedal çevirme uygulanır). Sıvı kısıtlamasını ve iki diyaliz arası kilo artışını sor.",
+    ["Düşük-orta yoğunlukta aerobik ve hafif kuvvet antrenmanı; kas kaybına ve yorgunluğa karşı faydalıdır.",
+     "Fistül kolunu koru.",
+     "Diyaliz hastalarında protein ihtiyacı genellikle daha yüksektir (yaklaşık 1,0–1,2 g/kg); proteini, sıvıyı, potasyum ve fosforu diyetisyen belirler."],
+    ["Fistül (damar erişimi) olan kolda ağırlık, bant, baskı, tansiyon ölçümü, saat ya da takı.",
+     "Periton diyalizinde karın doluyken karın içi basıncı artıran hareketler (mekik, ağır kaldırma).",
+     "Diyalizden hemen sonra yoğun egzersiz; hekime sorulmamış takviyeler."],
+    ["Baş dönmesi, tansiyon düşmesi, kas krampları, çarpıntı → dur.",
+     "Fistüldeki titreşimin (tril) kaybolması, kolda ağrı ya da soğukluk → hemen diyaliz merkezine haber.",
+     "Nefes darlığı, ödem → hekim."],
+    "KDOQI 2020 böbrek hastalığında beslenme kılavuzu", {cap:true, noHiit:true, noFin:true, noImp:true, noProt:'hd', noWater:true}),
+
+  HCd('siroz', 'organ', 3, "Karaciğer sirozu / karaciğer yetmezliği", "siroz asit özofagus varisi",
+    "Karaciğer dokusunun kalıcı hasarı; kas kaybı (sarkopeni), karında sıvı (asit) ve yemek borusunda varis görülebilir.",
+    "Hepatoloğun onayı şart; yemek borusu varisi olup olmadığını ve tedavi edilip edilmediğini öğren. Beta bloker kullanıyorsa nabız yanıtı düşüktür.",
+    ["Kas kaybına karşı gözetimli, orta yoğunlukta aerobik ve kuvvet antrenmanı.",
+     "Yoğunluğu nabızla değil algılanan zorlukla ayarla.",
+     "Beslenme: protein kısıtlanmaz, yaklaşık 1,2–1,5 g/kg önerilir; uzun açlıktan kaçınılır (yatmadan önce ara öğün). Alkol tamamen bırakılır, tuz kısıtlamasını hekim belirler. Kilo vermek gerekiyorsa hepatolog gözetiminde."],
+    ["Nefes tutma ve karın içi basıncı artıran ağır kaldırma (varis kanaması riski), maksimal efor.",
+     "Karında sıvı varken karın egzersizleri; hekime sorulmamış takviye ve bitkisel ürünler."],
+    ["Kan kusma, siyah ve katran gibi dışkı → 112.",
+     "Bilinç bulanıklığı, uyku halinde artış, karında hızlı şişme, sarılıkta artış → hekim."],
+    "EASL 2019 karaciğer hastalığında beslenme kılavuzu", {cap:true, noHiit:true, noFin:true, noImp:true, noDeficit:true, prot:[1.2, 1.5]}),
+
+  HCd('solunum_yet', 'organ', 3, "Solunum yetmezliği (evde oksijen)", "oksijen konsantratörü akciğer yetmezliği",
+    "Akciğerlerin kana yeterli oksijen verememesi; uzun süreli oksijen tedavisi gerekebilir.",
+    "Göğüs hastalıkları hekiminin onayı ve egzersizde kullanılacak oksijen akışı yazılı olmalı. İlk tercih pulmoner rehabilitasyondur.",
+    ["Çok düşük yoğunlukta, kısa aralıklı aerobik; oturarak ya da destekli egzersizler.",
+     "Hafif kuvvet çalışması, büzük dudak nefesi, enerji tasarrufu teknikleri.",
+     "Satürasyon sürekli izlenir, %88'in üstünde tutulur."],
+    ["Oksijensiz ya da hekimin belirlediği akışı değiştirerek egzersiz; nefes tutma."],
+    ["Satürasyonun %88'in altına düşmesi, artan nefes darlığı, morarma, bilinç bulanıklığı → dur; geçmezse 112."],
+    "AACVPR pulmoner rehabilitasyon kılavuzu", {cap:true, noHiit:true, noFin:true, noImp:true}),
+
+  HCd('nakil', 'organ', 2, "Organ nakli sonrası", "transplant böbrek nakli karaciğer nakli kalp nakli",
+    "Böbrek, karaciğer, kalp ya da akciğer nakli; bağışıklığı baskılayan ilaçlar kullanılır.",
+    "Nakil ekibinin onayı. Ameliyat yarasının iyileşme süresini ve kısıtları öğren (kalp naklinde göğüs kemiği).",
+    ["Kademeli aerobik ve kuvvet antrenmanı; kortizon kas ve kemiği zayıflatabildiği için kuvvet çalışması önemlidir.",
+     "Kalp naklinde nabız yavaş yükselir; uzun ısınma ve algılanan zorlukla ayar.",
+     "Hijyen: kendi havlusu, aletleri silme, kalabalık saatlerden kaçınma (enfeksiyon riski)."],
+    ["Yara iyileşmeden karın ve göğüs bölgesini yüklemek; nakil organına darbe alabilecek temaslı sporlar.",
+     "Hekime sorulmamış takviyeler (ilaç etkileşimi; greyfurt da ilaç düzeyini değiştirebilir)."],
+    ["Ateş, halsizlik, idrarda azalma, nakil bölgesinde ağrı → nakil ekibine haber."],
+    "", {cap:true}),
+
+  /* ---------- kadın sağlığı ---------- */
+  HCd('hamile', 'kadin', 2, "Hamilelik", "gebelik hamile",
+    "Komplikasyonsuz gebelikte düzenli egzersiz anne ve bebek için güvenli ve faydalıdır.",
+    "Kadın doğum hekiminin onayı. Şu durumlarda egzersiz yapılmaz: 26. haftadan sonra plasenta önde (plasenta previa), preeklampsi, rahim ağzı yetmezliği, erken doğum eylemi, zarların erken açılması, 2.–3. trimesterde süren kanama, ciddi kalp ya da akciğer hastalığı.",
+    ["Haftada en az 150 dk orta yoğunlukta aerobik; konuşabilir tempo.",
+     "Makine, dumbbell ve bantla orta yükte kuvvet antrenmanı; nefes tutmadan.",
+     "Pelvik taban egzersizleri.",
+     "Kalori: kilo vermek hedeflenmez; ihtiyaç 2. trimesterde yaklaşık 340 kcal, 3. trimesterde 450 kcal artar."],
+    ["1. trimesterden sonra uzun süre sırtüstü yatarak yapılan hareketler; karın üstü yatış.",
+     "Düşme ve darbe riskli sporlar (temaslı spor, kayak, binicilik), tüplü dalış, sıcak ortamda egzersiz (hot yoga).",
+     "Nefes tutma, maksimal kaldırma; 2500 m üstü rakımda egzersiz."],
+    ["Vajinal kanama, düzenli ağrılı kasılmalar, su gelmesi → dur, hekim.",
+     "Eforla orantısız nefes darlığı, baş dönmesi, baş ağrısı, göğüs ağrısı, baldırda ağrı ya da şişlik, dengeyi bozan kas güçsüzlüğü → dur, hekim."],
+    "ACOG Komite Görüşü 804 (2020)", {preg:true, noImp:true, cap:true, noHiit:true, noFin:true, noDeficit:true, pregKcal:true}),
+
+  HCd('dogum', 'kadin', 1, "Doğum sonrası (ilk 12 ay)", "lohusa postpartum sezaryen emzirme",
+    "Doğumdan sonraki dönem; pelvik taban ve karın duvarı toparlanma sürecindedir.",
+    "6–8. hafta kontrolünde hekim onayı; sezaryende yaranın iyileştiğinden emin ol. Mümkünse kadın sağlığı fizyoterapistine pelvik taban değerlendirmesi yaptır.",
+    ["İlk haftalardan itibaren pelvik taban egzersizleri ve yürüyüş.",
+     "Kuvvet antrenmanına hafif yükle dön; eforda nefes ver, pelvik tabanı hafifçe kas.",
+     "Koşu ve zıplamaya genellikle 12. haftadan önce dönülmez; öncesinde tek bacak denge ve zıplamasız kuvvet testleri belirtisiz yapılabilmeli.",
+     "Emziriyorsa ağır kalori kısıtlaması yok; haftada en fazla yaklaşık 0,5 kg kayıp."],
+    ["Karın ayrılması varken orta hatta kubbe yapan hareketler: mekik, crunch, ağır plank.",
+     "12. haftadan önce koşu ve zıplama."],
+    ["İdrar ya da gaz kaçırma, vajinada ağırlık ya da şişlik hissi → yükü azalt, pelvik taban fizyoterapisti.",
+     "8. haftadan sonra devam eden ya da artan kanama, yara yerinde akıntı → hekim."],
+    "Goom, Donnelly ve Brockwell 2019 doğum sonrası koşuya dönüş kılavuzu", {noImp:true, rm:HC_FLEX, adjMin:-0.15}),
+
+  HCd('diastaz', 'kadin', 1, "Karın kası ayrılması (diastasis recti)", "diastaz rektus",
+    "Karın ön duvarındaki iki düz karın kasının orta hatta ayrılması; en sık hamilelik sonrası görülür.",
+    "Ayrılmanın genişliğini ve orta hattaki gerginliği fizyoterapist değerlendirsin.",
+    ["Derin karın kası ve pelvik taban çalışması, nefesle birlikte.",
+     "Orta hatta kubbe yapmayan seviyede kademeli yük: dead bug, Pallof press, yan plank varyasyonları.",
+     "Günlük hayatta yataktan yana dönerek kalkma."],
+    ["Kontrol sağlanana kadar kubbe yapan hareketler: mekik, crunch, ağır asılı bacak kaldırma, ab wheel."],
+    ["Orta hatta ağrı, belirgin şişlik ya da fıtık şüphesi → hekim."],
+    "", {rm:HC_FLEX}),
+
+  HCd('pelvik', 'kadin', 1, "Pelvik taban sorunu (idrar kaçırma, sarkma)", "stres inkontinans prolapsus idrar kaçırma",
+    "Öksürürken, zıplarken ya da kaldırırken idrar kaçırma veya vajinada ağırlık hissi.",
+    "Kadın sağlığı fizyoterapisti değerlendirmesi önerilir; pelvik taban egzersizi ilk basamak tedavidir.",
+    ["Her gün pelvik taban kas eğitimi (sıkma ve tam gevşetme).",
+     "Kaldırırken nefes ver ve pelvik tabanı kas; yükü belirti yapmayan düzeyde artır.",
+     "Darbesiz kardiyo."],
+    ["Belirtiler düzelene kadar belirti yapan zıplama, koşu ve çok ağır kaldırma; nefes tutarak ıkınma."],
+    ["Vajinada şişlik ya da dışarı çıkma hissi, belirtilerin artması → hekim ya da fizyoterapist."],
+    "", {noImp:true}),
+
+  /* ---------- diğer ---------- */
+  HCd('kanser', 'diger', 2, "Kanser (tedavi sırasında ya da sonrası)", "kemoterapi radyoterapi onkoloji lenfödem",
+    "Egzersiz, kanser tedavisi sırasında ve sonrasında yorgunluğu, kaygıyı ve fiziksel işlevi iyileştirir.",
+    "Onkoloğun onayı. Kan değerlerini (beyaz küre, trombosit, hemoglobin), kemiğe yayılım olup olmadığını, port ya da kateter ve lenfödem durumunu öğren.",
+    ["Haftada 3 gün 30 dk orta yoğunlukta aerobik ve 2 gün kuvvet antrenmanı.",
+     "Yorgun günlerde yoğunluğu düşür ama tamamen bırakma; kısa yürüyüşler bile faydalıdır.",
+     "Lenfödem riskinde kuvvet antrenmanı güvenlidir; hafif başla, kol ya da bacaktaki şişliği izle."],
+    ["38°C ve üstü ateşte ya da aktif enfeksiyonda egzersiz; bağışıklık düşükken kalabalık salon.",
+     "Trombosit düşükken düşme ve darbe riskli hareketler; kemik yayılımı olan bölgeye yük.",
+     "Port ya da kateter bölgesine baskı."],
+    ["Yeni başlayan kemik ağrısı (yayılım belirtisi olabilir) → egzersizi bırak, onkoloji ekibine yönlendir.",
+     "Ateş, olağan dışı nefes darlığı, kolay morarma ya da kanama, kol/bacakta artan şişlik → hekim."],
+    "ACSM Uluslararası Yuvarlak Masa 2019 (Campbell ve ark.)", {cap:true, noHiit:true, noFin:true}),
+
+  HCd('epilepsi', 'diger', 1, "Epilepsi", "sara nöbet",
+    "Tekrarlayan nöbetlerle giden nörolojik hastalık; nöbetler kontrol altındaysa çoğu egzersiz güvenlidir.",
+    "Nöbet sıklığını, son nöbet tarihini ve tetikleyicileri (uykusuzluk, açlık, aşırı yorgunluk) öğren. Nöbet anında yapılacakları bil.",
+    ["Makineler ve emniyetli hareketler tercih edilir; serbest ağırlıkta yardımcı (spotter) şart.",
+     "Düzenli program, yeterli uyku ve beslenmeyle antrenman."],
+    ["Gözetimsiz ağır barbell (squat, bench), yüksekte ya da tek başına suda egzersiz."],
+    ["Nöbet olursa: kişiyi yere al, başını koru, ağzına bir şey sokma, yan yatır, süreyi tut. 5 dakikadan uzun sürerse, nöbetler arka arkaya gelirse ya da yaralanma varsa 112."],
+    "", {rm:['sq_bb', 'sq_fr', 'bp_bb', 'pike']}),
+
+  HCd('goz', 'diger', 1, "Göz: glokom, retina dekolmanı geçmişi, ileri diyabetik retinopati", "göz tansiyonu glokom retina",
+    "Göz içi basıncının yüksekliği ya da retina hastalıkları; bazı hareketler göz içi basıncını artırır.",
+    "Göz hekiminin kısıtlarını öğren, özellikle retina ameliyatı sonrası.",
+    ["Orta yoğunlukta aerobik ve kuvvet antrenmanı; nefes alıp vererek kaldır."],
+    ["Baş aşağı pozisyonlar (amuda kalkma, ayaklar yüksek şınav, baş aşağı eğimli bench), nefes tutma, maksimal kaldırma.",
+     "Retina sorunlarında zıplama ve sarsıntılı hareketler."],
+    ["Görmede ani azalma, ışık çakmaları, görme alanında perde ya da yeni uçuşan noktalar → acil göz hekimi."],
+    "", {cap:true, rm:HC_INV, noImp:true}),
+
+  HCd('fitik', 'diger', 2, "Kasık ya da göbek fıtığı", "inguinal umbilikal herni",
+    "Karın duvarındaki zayıf noktadan iç organın dışarı çıkması.",
+    "Ameliyat edilmemiş fıtıkta hekim onayı. Ameliyat olduysa cerrahın izin verdiği süreyi bekle; hafif aktiviteye genellikle birkaç hafta içinde, ağır kaldırmaya daha sonra dönülür.",
+    ["Nefes vererek kaldır; karın içi basıncı kontrollü tut.",
+     "Makineler ve orta yük; fizyoterapist önerisiyle derin karın kası çalışmaları."],
+    ["Ağır kaldırma, nefes tutma, ıkınma; mekik ve şişkinliği artıran karın hareketleri."],
+    ["Fıtıkta sertleşme, geri girmeme, şiddetli ağrı, kusma (boğulmuş fıtık) → 112."],
+    "", {lim:['back'], rm:HC_FLEX, cap:true}),
+
+  HCd('ameliyat', 'diger', 2, "Yakın zamanda ameliyat (son 6 ay)", "operasyon",
+    "Herhangi bir ameliyattan sonraki iyileşme dönemi.",
+    "Ameliyatı yapan hekimin yazılı onayı ve kısıtları: hangi hareket, ne kadar yük, ne zamana kadar.",
+    ["Yürüyüşle başla; kısıtlı bölge dışındaki bölgeleri hafif-orta yükle çalış.",
+     "Yara bölgesini zorlamadan kademeli ilerle."],
+    ["Yara iyileşmeden o bölgeye yük, gerilme ve basınç."],
+    ["Yarada kızarıklık, akıntı, açılma, ateş → hekim.",
+     "Baldırda şişlik-ağrı ya da ani nefes darlığı (pıhtı) → 112."],
+    "", {cap:true, noImp:true, noHiit:true}),
+
+  HCd('kan_sul', 'diger', 1, "Kan sulandırıcı kullanımı", "antikoagülan varfarin coumadin aspirin",
+    "Pıhtılaşmayı azaltan ilaçlar; morarma ve kanama riski artar.",
+    "İlacın neden kullanıldığını öğren (ör. ritim bozukluğu, kapak, pıhtı) ve o hastalığı da seç.",
+    ["Normal kuvvet ve aerobik antrenmanı yapılabilir; aletleri kontrollü kullan."],
+    ["Temaslı sporlar, düşme riski yüksek aktiviteler, darbe alma."],
+    ["Başını çarparsa belirti olmasa bile hekime (beyin kanaması riski).",
+     "Durmayan kanama, büyüyen morluk, siyah dışkı, idrarda kan → hekim; ağır kanamada 112."],
+    "", {}),
+
+  HCd('anemi', 'diger', 1, "Kansızlık (anemi)", "demir eksikliği b12",
+    "Kanda hemoglobin düşüklüğü; yorgunluk, nefes darlığı ve çarpıntı yapar.",
+    "Değerleri ve tedaviyi (demir vb.) öğren; ileri düzey anemide hekim onayı.",
+    ["Tedavi oturana kadar orta yoğunlukta aerobik, hafif-orta kuvvet antrenmanı.",
+     "Demir, B12 ve folat yönünden yeterli beslenme; takviyeyi hekim önerir."],
+    ["Değerler düzelene kadar yüksek yoğunluk ve uzun yoğun kardiyo."],
+    ["Baş dönmesi, bayılacak gibi olma, göğüs ağrısı, çarpıntı → dur."],
+    "", {hiit1:true}),
+
+  HCd('yeme', 'diger', 2, "Yeme bozukluğu öyküsü", "anoreksiya bulimiya tıkınırcasına yeme",
+    "Anoreksiya, bulimiya ya da tıkınırcasına yeme bozukluğu geçmişi ya da süren tedavisi.",
+    "Tedavi ekibiyle (hekim, psikolog ya da psikiyatrist, diyetisyen) iletişim kur; egzersizin miktarını ve türünü ekip belirler.",
+    ["Odak performans, güç ve iyi hissetme; kalori ve kilo konuşulmaz.",
+     "Düzenli, yapılandırılmış program; dinlenme günleri korunur."],
+    ["Kalori açığı, kilo ve ölçü hedefleri, tartılma, vücut eleştirisi.",
+     "Yemekten sonra yakmak için ek egzersiz ya da program dışı ek seanslar."],
+    ["Baş dönmesi, bayılma, çarpıntı, hızlı kilo kaybı, adetin kesilmesi, egzersizi bırakamama ya da kaçırınca yoğun suçluluk → antrenmanı durdur, tedavi ekibine yönlendir."],
+    "", {hideKcal:true, noDeficit:true, noFin:true, noHiit:true, cap:true})
+];
+var HCX = {}; HC.forEach(function(c){ HCX[c.id] = c; });
+
+function healthFx(m){
+  var fx = {lim:[], strict:{}, rm:{}, noImp:false, cap:false, noHiit:false, hiit1:false, noFin:false, noDeficit:false,
+            adjMin:null, noProt:'', prot:null, noWater:false, hideKcal:false, preg:false, pregKcal:false, lvl:-1, n:0};
+  (m.health || []).forEach(function(id){
+    var c = HCX[id]; if (!c) return;
+    var f = c.fx; fx.n++;
+    fx.lvl = Math.max(fx.lvl, c.lvl);
+    (f.lim || []).forEach(function(l){ if (fx.lim.indexOf(l) < 0) fx.lim.push(l); });
+    if (f.strict) for (var k in f.strict) fx.strict[k] = Math.min(fx.strict[k] == null ? 9 : fx.strict[k], f.strict[k]);
+    (f.rm || []).forEach(function(x){ fx.rm[x] = 1; });
+    if (f.preg) HC_PREG.forEach(function(x){ fx.rm[x] = 1; });
+    ['noImp', 'cap', 'noHiit', 'hiit1', 'noFin', 'noDeficit', 'noWater', 'hideKcal', 'preg', 'pregKcal'].forEach(function(k){ if (f[k]) fx[k] = true; });
+    if (f.adjMin != null) fx.adjMin = fx.adjMin == null ? f.adjMin : Math.max(fx.adjMin, f.adjMin);
+    if (f.noProt && fx.noProt !== 'ckd') fx.noProt = f.noProt;
+    if (f.prot && !fx.prot) fx.prot = f.prot;
+  });
+  if (m.hnote && fx.lvl < 1) fx.lvl = Math.max(fx.lvl, 1);
+  return fx;
+}
+function effLim(m){
+  var a = (m.limits || []).slice();
+  healthFx(m).lim.forEach(function(l){ if (a.indexOf(l) < 0) a.push(l); });
+  return a;
+}
+function fxLines(f){
+  var t = [];
+  if (f.strict && f.strict.b) t.push('omurgaya yük bindiren hareketler çıkarıldı');
+  else if (f.lim && f.lim.length) t.push(f.lim.map(function(l){ return LIMN[l]; }).join(', ') + ' bölgesini zorlayan hareketler çıkarıldı');
+  if (f.preg) t.push('sırtüstü ve yüklü karın hareketleri çıkarıldı');
+  else if (f.rm && f.rm.length){ var nm = f.rm.map(function(id){ for (var i = 0; i < DB.length; i++) if (DB[i].id === id) return DB[i].name; return ''; }).filter(Boolean); if (nm.length) t.push('çıkarılan: ' + nm.join(', ')); }
+  if (f.noImp) t.push('zıplama ve darbe yok');
+  if (f.cap) t.push('tükenmeye gidilmez, en az 2 tekrar kala bitirilir, nefes tutulmaz');
+  if (f.noHiit) t.push('HIIT yok, orta tempo kardiyo');
+  else if (f.hiit1) t.push('HIIT haftada en fazla 1, en hafif seviye');
+  if (f.noFin) t.push('bitiriş yok');
+  if (f.hideKcal) t.push('beslenme rakamları gösterilmez');
+  else {
+    if (f.noDeficit) t.push('kalori açığı uygulanmaz');
+    if (f.adjMin != null) t.push('kalori açığı en fazla %' + Math.round(-f.adjMin * 100));
+    if (f.noProt) t.push('protein hedefini nefrolog/diyetisyen belirler');
+    if (f.prot) t.push('protein ' + String(f.prot[0]).replace('.', ',') + '–' + String(f.prot[1]).replace('.', ',') + ' g/kg');
+    if (f.noWater) t.push('su miktarını hekim belirler');
+  }
+  return t;
+}
+
 /* ---------- form state ---------- */
-var F = {sex:'k', goal:'rekomp', exp:'orta', days:'4', dur:'60', focus:['glute'], eq:'f', limits:[], hard:'sert'};
+var F = {sex:'k', goal:['rekomp'], exp:'orta', days:'4', dur:'60', focus:['glute'], eq:'f', limits:[], hard:'sert', health:[]};
 var focusTouched = false;
 
 function syncForm(){
@@ -784,7 +1466,11 @@ function syncForm(){
   });
   if (!F.focus.length) { var nb = document.querySelector('[data-key="focus"] [data-v="none"]'); nb.classList.add('on'); nb.setAttribute('aria-pressed','true'); }
   var age = parseFloat($('age').value);
-  var capped = F.exp === 'bas' || (age && age < 18);
+  var hcap = healthFx({health:F.health}).cap;
+  var capped = F.exp === 'bas' || (age && age < 18) || hcap;
+  hRender();
+  var gs = goalsOf({goals:F.goal}), pg = primaryGoal(gs);
+  $('goalHint').textContent = gs.length > 1 ? 'Seçimlerin birleşimine göre: ' + (pg === 'rekomp' && gs.indexOf('rekomp') < 0 ? 'yağ yakımı ve kas kazanımı birlikte sıkılaşma yaklaşımıyla yapılır; ' : '') + 'kalori ' + GOALN[pg].toLocaleLowerCase('tr-TR') + ' hedefine göre hesaplanır' + (gs.indexOf('guc') > -1 ? ', ana hareketler kuvvet aralığında çalışılır' : '') + '.' : '';
   [].forEach.call(document.querySelectorAll('[data-key="hard"] .chip'), function(b){
     b.disabled = capped && b.getAttribute('data-v') !== 'sert';
   });
@@ -792,7 +1478,7 @@ function syncForm(){
   var hint = {sert:'Ana hareketlerde 1–2 tekrar kala bitir, izolasyonda tükenmeye yakın.',
               cok:'Ana hareketler 1 tekrar kala; izolasyonlarda son set rest-pause.',
               esra:'İzolasyonlarda drop set, rest-pause ve yarım tekrarlar; her gün sonunda bitiriş.'}[F.hard];
-  $('hardHint').textContent = capped ? 'Yeni başlayanlarda ve 18 yaş altında sertlik Sert ile sınırlı; önce teknik oturur.' : hint;
+  $('hardHint').textContent = hcap ? 'Seçilen sağlık durumu nedeniyle sertlik Sert ile sınırlı; tükenmeye gidilmez, en az 2 tekrar kala bitirilir.' : capped ? 'Yeni başlayanlarda ve 18 yaş altında sertlik Sert ile sınırlı; önce teknik oturur.' : hint;
 }
 document.querySelector('.form').addEventListener('click', function(e){
   var b = e.target.closest('.chip'); if (!b || b.disabled) return;
@@ -810,6 +1496,7 @@ document.querySelector('.form').addEventListener('click', function(e){
       }
     } else {
       var j = arr.indexOf(v); if (j > -1) arr.splice(j, 1); else arr.push(v);
+      if (key === 'goal' && !arr.length){ toast('En az bir hedef seçili kalmalı'); return; }
     }
     F[key] = arr;
   } else {
@@ -819,6 +1506,123 @@ document.querySelector('.form').addEventListener('click', function(e){
   syncForm();
 });
 $('age').addEventListener('input', syncForm);
+
+/* ---------- sağlık: formda seçim ---------- */
+function hNorm(x, k){ return String(x).toLocaleLowerCase('tr-TR').replace(/[çğıöşüâî]/g, function(ch){ return {'ç':'c','ğ':k ? 'k' : 'g','ı':'i','ö':'o','ş':'s','ü':'u','â':'a','î':'i'}[ch]; }); }
+function hRender(){
+  var box = $('hChips'); if (!box) return;
+  box.innerHTML = F.health.map(function(id){
+    var c = HCX[id];
+    return c ? '<button type="button" class="chip on hsel" data-hdel="' + id + '" aria-label="' + esc(c.n) + ' kaldır">' + esc(c.n) + ' <span aria-hidden="true">×</span></button>' : '';
+  }).join('');
+  box.classList.toggle('hidden', !F.health.length);
+  $('hPickBtn').textContent = F.health.length ? '+ Rahatsızlık ekle ya da değiştir' : '+ Rahatsızlık seç';
+}
+function hSheet(){
+  var html = '<h3>Rahatsızlık seç</h3><p class="sub">Birden fazla seçebilirsin. Her seçim programı otomatik uyarlar; yol haritası programın başında çıkar.</p>' +
+    '<input class="text" id="hSearch" placeholder="Ara: tansiyon, fıtık, böbrek…" autocomplete="off">';
+  HC_CATS.forEach(function(ct){
+    if (ct[0] === 'kadin' && F.sex === 'e') return;
+    var items = HC.filter(function(c){ return c.cat === ct[0]; });
+    html += '<div class="hcat"><h4>' + ct[1] + '</h4><div class="chips">' + items.map(function(c){
+      var on = F.health.indexOf(c.id) > -1;
+      return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-hc="' + c.id + '" aria-pressed="' + on + '" data-q="' + esc(hNorm(c.n + ' ' + c.al) + ' ' + hNorm(c.n + ' ' + c.al, 1)) + '">' + esc(c.n) + '</button>';
+    }).join('') + '</div></div>';
+  });
+  html += '<p class="hint hidden" id="hNone">Bulunamadı; formdaki not kutusuna yazabilirsin.</p>' +
+    '<div class="sheet-foot"><button class="ghost" data-hclear type="button" style="margin-right:auto">Temizle</button><button class="primary" data-hdone type="button" style="width:auto;padding:11px 24px;font-size:15px">Tamam</button></div>';
+  openSheet(html);
+}
+$('hPickBtn').addEventListener('click', hSheet);
+$('hChips').addEventListener('click', function(e){
+  var b = e.target.closest('[data-hdel]'); if (!b) return;
+  var id = b.getAttribute('data-hdel');
+  F.health = F.health.filter(function(x){ return x !== id; });
+  syncForm();
+});
+$('layer').addEventListener('click', function(e){
+  var b = e.target.closest('[data-hc]');
+  if (b){
+    var id = b.getAttribute('data-hc'), i = F.health.indexOf(id);
+    if (i > -1) F.health.splice(i, 1); else F.health.push(id);
+    b.classList.toggle('on', i < 0); b.setAttribute('aria-pressed', i < 0 ? 'true' : 'false');
+    syncForm(); return;
+  }
+  if (e.target.closest('[data-hclear]')){
+    F.health = [];
+    [].forEach.call(document.querySelectorAll('[data-hc]'), function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed', 'false'); });
+    syncForm(); return;
+  }
+  if (e.target.closest('[data-hdone]')) closeSheet();
+});
+$('layer').addEventListener('input', function(e){
+  if (e.target.id !== 'hSearch') return;
+  var q = hNorm(e.target.value.trim()), any = false;
+  [].forEach.call(document.querySelectorAll('.hcat'), function(cat){
+    var n = 0;
+    [].forEach.call(cat.querySelectorAll('[data-hc]'), function(x){ var ok = !q || x.getAttribute('data-q').indexOf(q) > -1; x.classList.toggle('hidden', !ok); if (ok) n++; });
+    cat.classList.toggle('hidden', !n); if (n) any = true;
+  });
+  $('hNone').classList.toggle('hidden', any);
+});
+
+/* ---------- sağlık: programdaki yol haritası ---------- */
+function hcList(t, arr, cls){ return arr && arr.length ? '<div class="hc-g' + (cls ? ' ' + cls : '') + '"><b>' + t + '</b><ul>' + arr.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' : ''; }
+function hcCardHTML(c, open){
+  var fl = fxLines(c.fx);
+  return '<details class="hc"' + (open ? ' open' : '') + '><summary><span class="hc-n">' + esc(c.n) + '</span><span class="lv lv' + c.lvl + '">' + HC_LVL[c.lvl] + '</span></summary>' +
+    '<div class="hc-b"><p class="hc-w">' + esc(c.w) + '</p>' +
+    '<div class="hc-g"><b>Başlamadan önce</b><p>' + esc(c.b) + '</p></div>' +
+    hcList('Yapılacaklar', c.d) + hcList('Kaçınılacaklar', c.a) + hcList('Hemen dur, yönlendir', c.s, 'stop') +
+    '<p class="hc-app"><b>Programda:</b> ' + esc(fl.length ? fl.join(' · ') + '.' : 'hareket listesi değişmedi; yukarıdaki kurallarla uygulanır.') + '</p>' +
+    (c.src ? '<p class="hc-src">Dayanak: ' + esc(c.src) + '</p>' : '') + '</div></details>';
+}
+function healthHTML(m){
+  var ids = (m.health || []).filter(function(id){ return HCX[id]; }), note = m.hnote;
+  if (!ids.length && !note) return '';
+  var fx = healthFx(m), lv = Math.max(0, fx.lvl);
+  var head = ['Program uyarlandı; aşağıdaki maddeleri antrenmandan önce oku.',
+              'Program uyarlandı; mümkünse hekim ya da fizyoterapist görüşü alınmalı.',
+              'Başlamadan önce ilgili hekimden yazılı onay ve kısıtlar alınmalı.',
+              'Salonda başlamadan önce uzman hekim onayı şart; ideal olan önce gözetimli bir rehabilitasyon programı (kardiyak, pulmoner vb.). Yüksek yoğunluk yok.'][lv];
+  var open = ids.length + (note ? 1 : 0) <= 2;
+  var h = '<div class="sec" id="healthSec"><h3>Sağlık durumu</h3>' +
+    '<div class="hbox hb' + lv + '"><span class="lv lv' + lv + '">' + HC_LVL[lv] + '</span><p>' + head + '</p></div>' +
+    '<div class="hred"><b>Her durumda hemen dur</b><p>Göğüs ağrısı ya da baskı, eforla orantısız nefes darlığı, baş dönmesi ya da bayılacak gibi olma, düzensiz ya da çok hızlı kalp atışı, ani şiddetli baş ağrısı, yüzde kayma, konuşma bozukluğu ya da bir tarafta güçsüzlük. Dinlenince geçmiyorsa 112.</p></div>';
+  ids.forEach(function(id){ h += hcCardHTML(HCX[id], open); });
+  if (note) h += '<details class="hc"' + (open ? ' open' : '') + '><summary><span class="hc-n">Diğer: ' + esc(note) + '</span><span class="lv lv1">' + HC_LVL[1] + '</span></summary>' +
+    '<div class="hc-b"><p class="hc-w">Listede olmayan durumlar için genel yol haritası. Program bu not nedeniyle otomatik değişmedi.</p>' +
+    hcList('Yol haritası', ['Tanıyı, şikâyetleri ve kullanılan ilaçları öğren.',
+      'Hekimden egzersize izin ve kısıtları yazılı iste: hangi hareketler, ne kadar yük, hangi nabız ya da tansiyon sınırları.',
+      'Düşük-orta yoğunlukta başla, 2–4 hafta içinde kademeli artır; tükenmeye gitme, nefes tutma.',
+      'Her seansta belirtileri sor; artış olursa yükü azalt, sürerse hekime yönlendir.']) + '</div></details>';
+  h += '<p class="hint" style="margin-top:12px">Bu bölüm tanı koymaz ve tedavi önermez; kılavuzlara dayanan, antrenörün güvenli program kurması için bir yol haritasıdır. Hekimin ve fizyoterapistin önerisi her zaman önce gelir. Genel çerçeve: ACSM Egzersiz Testi ve Reçetesi Kılavuzu.</p></div>';
+  return h;
+}
+
+/* ---------- hedefler (çoklu seçim) ---------- */
+var GOAL_ORDER = ['yag', 'rekomp', 'kas', 'guc', 'kondisyon'];
+function goalsOf(m){
+  var g = Array.isArray(m.goals) && m.goals.length ? m.goals : Array.isArray(m.goal) ? m.goal : [m.goal || 'rekomp'];
+  var r = GOAL_ORDER.filter(function(x){ return g.indexOf(x) > -1; });
+  return r.length ? r : ['rekomp'];
+}
+function primaryGoal(gs){
+  if (gs.length === 1) return gs[0];
+  var h = function(x){ return gs.indexOf(x) > -1; };
+  if (h('yag') && (h('kas') || h('rekomp'))) return 'rekomp';
+  if (h('yag')) return 'yag';
+  if (h('rekomp')) return 'rekomp';
+  if (h('kas')) return 'kas';
+  if (h('guc')) return 'guc';
+  return 'kondisyon';
+}
+function pgOf(m){ return primaryGoal(goalsOf(m)); }
+function tgOf(m){ var gs = goalsOf(m); if (gs.indexOf('guc') > -1) return 'guc'; if (gs.length === 1 && gs[0] === 'kondisyon') return 'kondisyon'; return 'hyp'; }
+function goalMax(m, t){ return Math.max.apply(null, goalsOf(m).map(function(g){ return t[g]; })); }
+function hasGoal(m, g){ return goalsOf(m).indexOf(g) > -1; }
+function goalsTxt(m){ return goalsOf(m).map(function(g){ return GOALN[g]; }).join(' + '); }
+function listTxt(a){ return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' ve ' + a[a.length - 1]; }
 
 /* ---------- calculations ---------- */
 function analyse(m){
@@ -834,31 +1638,41 @@ function analyse(m){
   var bmr = 10 * m.weight + 6.25 * m.height - 5 * m.age + (male ? 5 : -161);
   var af = {3:1.45, 4:1.55, 5:1.6, 6:1.7}[m.days];
   var tdee = bmr * af;
-  var adj = {yag:-0.2, rekomp:-0.12, kas:0.08, guc:0.05, kondisyon:0}[m.goal];
-  if (m.goal === 'yag' && bf < (male ? 15 : 22)) adj = -0.15;
-  if (m.goal === 'kas' && m.exp === 'ileri') adj = 0.05;
+  var pg = pgOf(m), fx = healthFx(m);
+  var adj = {yag:-0.2, rekomp:-0.12, kas:0.08, guc:0.05, kondisyon:0}[pg];
+  if (pg === 'yag' && bf < (male ? 15 : 22)) adj = -0.15;
+  if (pg === 'kas' && m.exp === 'ileri') adj = 0.05;
+  var adj0 = adj;
+  if (fx.noDeficit) adj = Math.max(adj, 0);
+  if (fx.adjMin != null) adj = Math.max(adj, fx.adjMin);
   var kcal = tdee * (1 + adj);
   var floor = bmr * 1.15;
   var floored = kcal < floor; if (floored) kcal = floor;
   kcal = Math.round(kcal / 10) * 10;
   var refW = bmi >= 30 ? 25 * h * h : m.weight;           /* protein on a reference weight if BMI ≥ 30 */
-  var pkg = {yag:2.0, rekomp:2.0, kas:1.8, guc:1.8, kondisyon:1.6}[m.goal];
+  var pkg = goalMax(m, {yag:2.0, rekomp:2.0, kas:1.8, guc:1.8, kondisyon:1.6});
+  if (fx.prot) pkg = (fx.prot[0] + fx.prot[1]) / 2;
   var prot = Math.round(refW * pkg / 5) * 5;
   var fat = Math.max(Math.round(m.weight * (male ? 0.8 : 0.9)), Math.round(kcal * 0.22 / 9));
   var carb = Math.max(0, Math.round((kcal - prot * 4 - fat * 9) / 4));
   var water = Math.round(m.weight * 35 / 100) / 10;
-  var rate = {yag:[0.5,0.8], rekomp:[0.25,0.5], kas:[-0.25,-0.5], guc:[0,-0.25], kondisyon:[0,0.25]}[m.goal];
-  var steps = {yag:'10.000–12.000', rekomp:'8.000–10.000', kas:'7.000–9.000', guc:'7.000–9.000', kondisyon:'10.000+'}[m.goal];
-  return {bmi:bmi, bmiCat:bmiCat, bf:bf, bfSrc:bfSrc, ffm:ffm, bmr:bmr, tdee:tdee, adj:adj, kcal:kcal, floored:floored,
-          prot:prot, fat:fat, carb:carb, water:water, rate:rate, steps:steps};
+  var rate = {yag:[0.5,0.8], rekomp:[0.25,0.5], kas:[-0.25,-0.5], guc:[0,-0.25], kondisyon:[0,0.25]}[pg];
+  if (adj !== adj0) rate = adj < 0 ? [0.25, 0.5] : [0, 0];
+  var steps = hasGoal(m, 'yag') ? '10.000–12.000' : hasGoal(m, 'kondisyon') ? '10.000+' : {yag:'10.000–12.000', rekomp:'8.000–10.000', kas:'7.000–9.000', guc:'7.000–9.000', kondisyon:'10.000+'}[pg];
+  return {bmi:bmi, bmiCat:bmiCat, bf:bf, bfSrc:bfSrc, ffm:ffm, bmr:bmr, tdee:tdee, adj:adj, adj0:adj0, kcal:kcal, floored:floored,
+          prot:prot, pkg:pkg, fat:fat, carb:carb, water:water, rate:rate, steps:steps, pg:pg, fx:fx};
 }
 
 /* ---------- generator ---------- */
 function candidates(p, m){
-  var lim = m.limits;
+  var lim = effLim(m), fx = healthFx(m), st = fx.strict;
   var list = DB.filter(function(x){
     if (x.p !== p) return false;
     if (EQ[x.eq] > EQ[m.eq]) return false;
+    if (fx.rm[x.id]) return false;
+    if (st.b != null && x.b >= st.b) return false;
+    if (st.k != null && x.k >= st.k) return false;
+    if (st.s != null && x.s >= st.s) return false;
     if (lim.indexOf('knee') > -1 && x.k >= 2) return false;
     if (lim.indexOf('back') > -1 && x.b >= 2) return false;
     if (lim.indexOf('shoulder') > -1 && x.s >= 2) return false;
@@ -867,9 +1681,9 @@ function candidates(p, m){
   });
   return list;
 }
-function hardness(m){ return (m.exp === 'bas' || m.age < 18) ? 'sert' : m.hard; }
+function hardness(m){ return (m.exp === 'bas' || m.age < 18 || healthFx(m).cap) ? 'sert' : m.hard; }
 function repsFor(role, p, m){
-  var g = m.goal;
+  var g = tgOf(m);
   if (g === 'guc'){
     if (role === 'main') return m.exp === 'bas' || m.age >= 50 ? '5–8' : (p === 'hip_thrust' ? '5–8' : '3–5');
     if (role === 'aux') return '6–8';
@@ -882,12 +1696,14 @@ function repsFor(role, p, m){
   return '10–15';
 }
 function restFor(role, m){
-  if (m.goal === 'guc') return role === 'main' ? ['3–4 dk',210] : role === 'aux' ? ['2 dk',120] : ['90 sn',90];
-  if (m.goal === 'kondisyon') return role === 'main' ? ['90 sn',90] : role === 'aux' ? ['60 sn',60] : ['45 sn',45];
+  var g = tgOf(m);
+  if (g === 'guc') return role === 'main' ? ['3–4 dk',210] : role === 'aux' ? ['2 dk',120] : ['90 sn',90];
+  if (g === 'kondisyon') return role === 'main' ? ['90 sn',90] : role === 'aux' ? ['60 sn',60] : ['45 sn',45];
   return role === 'main' ? ['2–3 dk',150] : role === 'aux' ? ['90 sn–2 dk',105] : ['60–90 sn',75];
 }
 function rirFor(role, p, m){
   var h = hardness(m), r;
+  if (healthFx(m).cap) return role === 'iso' ? '2' : '2–3';
   if (m.exp === 'bas') r = role === 'main' ? '2–3' : role === 'aux' ? '2' : '1–2';
   else if (h === 'sert') r = role === 'main' ? '2' : role === 'aux' ? '1–2' : '1';
   else if (h === 'cok') r = role === 'main' ? '1–2' : role === 'aux' ? '1' : '0–1';
@@ -954,7 +1770,7 @@ function generate(m, seed, swaps){
     var list = [];
     day.slots.forEach(function(s, si){
       var c = candidates(s.p, m);
-      if (m.goal === 'guc' && s.p === 'hinge' && s.role === 'main'){
+      if (tgOf(m) === 'guc' && s.p === 'hinge' && s.role === 'main'){
         c = c.slice().sort(function(a, b){ return (b.id === 'dl_bb') - (a.id === 'dl_bb'); });
       }
       if (!c.length) return;
@@ -1001,17 +1817,18 @@ function generate(m, seed, swaps){
   return days;
 }
 function finisherFor(day, m, di){
-  var h = hardness(m);
-  var want = h === 'esra' || m.goal === 'yag' || m.goal === 'kondisyon';
-  if (!want) return null;
+  var h = hardness(m), fx = healthFx(m), lim = effLim(m);
+  var want = h === 'esra' || hasGoal(m, 'yag') || hasGoal(m, 'kondisyon');
+  if (!want || fx.noFin) return null;
   var lo = LOWERISH[day.type];
   if (lo && m.focus.indexOf('glute') > -1 && h === 'esra') return GLUTE_FIN[di % GLUTE_FIN.length];
   var bmi = m.weight / Math.pow(m.height / 100, 2);
   var ok = FINISHERS.filter(function(f){
     if (EQ[f.eq] > EQ[m.eq]) return false;
-    if (m.limits.indexOf('knee') > -1 && f.k >= 1) return false;
-    if (m.limits.indexOf('back') > -1 && f.b >= 1) return false;
-    if ((bmi >= 30 || m.age >= 55) && f.impact) return false;
+    if (lim.indexOf('knee') > -1 && f.k >= 1) return false;
+    if (lim.indexOf('back') > -1 && f.b >= 1) return false;
+    if ((bmi >= 30 || m.age >= 55 || fx.noImp) && f.impact) return false;
+    if ((fx.cap || fx.strict.b != null) && f.b >= 2) return false;
     return true;
   });
   if (!ok.length) return 'Tempolu yürüyüş: 12 dk, konuşabilecek ama şarkı söyleyemeyecek tempoda';
@@ -1041,7 +1858,7 @@ function render(){
   var name = m.name ? esc(m.name) : 'İsimsiz üye';
   var facts = (m.sex === 'k' ? 'Kadın' : 'Erkek') + ', ' + m.age + ' yaş, ' + m.height + ' cm, ' + fmt(m.weight, m.weight % 1 ? 1 : 0) + ' kg' +
               (m.waist ? ', bel ' + m.waist + ' cm' : '');
-  var focusTxt = m.focus.length ? m.focus.map(function(f){ return FOCUS_N[f]; }).join(' ve ') + ' öncelikli' : 'dengeli dağılım';
+  var focusTxt = m.focus.length ? listTxt(m.focus.map(function(f){ return FOCUS_N[f]; })) + ' öncelikli' : 'dengeli dağılım';
   var h = hardness(m);
 
   var html = '';
@@ -1055,26 +1872,38 @@ function render(){
   var rateTxt = a.rate[0] === 0 && a.rate[1] === 0 ? 'Kilo sabit' :
     (a.rate[0] >= 0 && a.rate[1] > 0 ? 'Haftada ~' + fmt(m.weight * a.rate[0] / 100, 1) + '–' + fmt(m.weight * a.rate[1] / 100, 1) + ' kg kayıp' :
      'Haftada ~' + fmt(Math.abs(m.weight * a.rate[0] / 100), 1) + '–' + fmt(Math.abs(m.weight * a.rate[1] / 100), 1) + ' kg artış');
-  if (m.goal === 'guc') rateTxt = 'Kilo sabit ya da hafif artış';
-  if (m.goal === 'kondisyon') rateTxt = 'Kilo sabit, dayanıklılık artar';
+  if (a.pg === 'guc') rateTxt = 'Kilo sabit ya da hafif artış';
+  if (a.pg === 'kondisyon') rateTxt = 'Kilo sabit, dayanıklılık artar';
+  if (a.adj0 < 0 && a.adj >= 0) rateTxt = 'Kilo kaybı hedeflenmez';
   var vol = volume(days);
   var fm = []; m.focus.forEach(function(f){ fm = fm.concat(FOCUS_M[f] || []); });
   var order = ['glute','quad','ham','back','chest','shoulder','arm','core','calf'];
   var maxV = 1; order.forEach(function(k){ if ((vol[k] || 0) > maxV) maxV = vol[k]; });
 
-  html += '<div class="sec"><h3>Ölçüm ve hedefler</h3><p class="sub">' + GOALN[m.goal] + ', ' + focusTxt + ', sertlik: ' + HARDN[h] + '. Rakamlar formüllerle hesaplanan başlangıç tahminleridir; ilk 2–3 haftanın tartı ve ölçüm sonuçlarına göre ayarlanır.</p>';
+  html += healthHTML(m);
+  var fx = a.fx, nutRows;
+  if (fx.hideKcal){
+    nutRows = '<tr class="key"><td>Beslenme<small>Sağlık durumu nedeniyle kalori, makro ve kilo hedefi gösterilmez; tedavi ekibi belirler</small></td><td>—</td></tr>' +
+      '<tr><td>Günlük adım</td><td>' + a.steps + '</td></tr>';
+  } else {
+    var protRow = fx.noProt ? '<tr><td>Protein<small>' + (fx.noProt === 'hd' ? 'Diyalizde genellikle ~1,0–1,2 g/kg; diyetisyen belirler' : 'Böbrek hastalığında genellikle kısıtlı (~0,55–0,8 g/kg); nefrolog belirler') + '</small></td><td>Hekim</td></tr>'
+      : '<tr><td>Protein' + (fx.prot ? '<small>' + String(fx.prot[0]).replace('.', ',') + '–' + String(fx.prot[1]).replace('.', ',') + ' g/kg, kısıtlanmaz</small>' : '') + '</td><td>' + a.prot + ' g</td></tr>';
+    var macro = fx.noProt ? '<tr><td>Yağ ve karbonhidrat<small>Protein ve mineral kısıtlamasına göre diyetisyen belirler</small></td><td>—</td></tr>'
+      : '<tr><td>Yağ</td><td>' + a.fat + ' g</td></tr><tr><td>Karbonhidrat</td><td>' + a.carb + ' g</td></tr>';
+    var waterRow = fx.noWater ? '<tr><td>Su<small>Sıvı kısıtlaması olabilir; miktarı hekim belirler</small></td><td>Hekim</td></tr>'
+      : '<tr><td>Su<small>Antrenman günü +0,5 L</small></td><td>' + fmt(a.water, 1) + ' L</td></tr>';
+    nutRows = '<tr class="key"><td>Kalori hedefi<small>' + (fx.pregKcal ? 'Bakım; 2. trimesterde +340, 3. trimesterde +450 kcal' : kAdj + (a.adj !== a.adj0 ? ', sağlık durumu nedeniyle sınırlandı' : '') + (a.floored ? ', güvenli alt sınıra çekildi' : '')) + '</small></td><td>' + fmt(a.kcal) + ' kcal</td></tr>' +
+      protRow + macro + waterRow +
+      '<tr><td>Günlük adım</td><td>' + a.steps + '</td></tr>' +
+      '<tr><td>Beklenen değişim</td><td>' + rateTxt + '</td></tr>';
+  }
+  html += '<div class="sec"><h3>Ölçüm ve hedefler</h3><p class="sub">' + goalsTxt(m) + ', ' + focusTxt + ', sertlik: ' + HARDN[h] + '. Rakamlar formüllerle hesaplanan başlangıç tahminleridir; ilk 2–3 haftanın tartı ve ölçüm sonuçlarına göre ayarlanır.</p>';
   html += '<div class="two"><table class="slip">' +
-    '<tr><td>Vücut kitle indeksi<small>' + a.bmiCat + '</small></td><td>' + fmt(a.bmi, 1) + '</td></tr>' +
-    '<tr><td>Tahmini yağ oranı<small>' + a.bfSrc + '</small></td><td>%' + fmt(a.bf, 0) + '</td></tr>' +
+    (fx.hideKcal ? '' : '<tr><td>Vücut kitle indeksi<small>' + a.bmiCat + '</small></td><td>' + fmt(a.bmi, 1) + '</td></tr>' +
+    '<tr><td>Tahmini yağ oranı<small>' + a.bfSrc + '</small></td><td>%' + fmt(a.bf, 0) + '</td></tr>') +
     '<tr><td>Bazal metabolizma<small>Mifflin-St Jeor</small></td><td>' + fmt(Math.round(a.bmr / 10) * 10) + ' kcal</td></tr>' +
     '<tr><td>Günlük harcama<small>Haftada ' + m.days + ' antrenman ile</small></td><td>' + fmt(Math.round(a.tdee / 10) * 10) + ' kcal</td></tr>' +
-    '<tr class="key"><td>Kalori hedefi<small>' + kAdj + (a.floored ? ', güvenli alt sınıra çekildi' : '') + '</small></td><td>' + fmt(a.kcal) + ' kcal</td></tr>' +
-    '<tr><td>Protein</td><td>' + a.prot + ' g</td></tr>' +
-    '<tr><td>Yağ</td><td>' + a.fat + ' g</td></tr>' +
-    '<tr><td>Karbonhidrat</td><td>' + a.carb + ' g</td></tr>' +
-    '<tr><td>Su<small>Antrenman günü +0,5 L</small></td><td>' + fmt(a.water, 1) + ' L</td></tr>' +
-    '<tr><td>Günlük adım</td><td>' + a.steps + '</td></tr>' +
-    '<tr><td>Beklenen değişim</td><td>' + rateTxt + '</td></tr>' +
+    nutRows +
     '</table><div><div class="bars" aria-label="Haftalık set dağılımı">' +
     order.filter(function(k){ return vol[k]; }).map(function(k){
       var f = fm.indexOf(k) > -1;
@@ -1129,7 +1958,7 @@ function exHTML(x, n){
 function shortTitle(t){ return t.replace(' vücut', '').replace(' günü', '').replace('Omuz ve kol', 'Omuz-kol'); }
 function cardioDay(w, days, m){
   var free = []; for (var i = 0; i < 7; i++){ if (!days.some(function(d){ return d.wd === i; })) free.push(i); }
-  var n = {yag:3, rekomp:2, kas:1, guc:1, kondisyon:3}[m.goal];
+  var n = goalMax(m, {yag:3, rekomp:2, kas:1, guc:1, kondisyon:3});
   free = free.filter(function(i){ return i !== 6; }).concat(free.indexOf(6) > -1 ? [6] : []);
   var list = free.slice(0, n);
   if (list.indexOf(w) < 0) return '';
@@ -1140,15 +1969,18 @@ function cardioDay(w, days, m){
 }
 function notesHTML(m, a){
   var n = [];
-  var hN = hiitPerWeek(m), cN = {yag:3, rekomp:2, kas:1, guc:1, kondisyon:3}[m.goal], restC = Math.max(0, cN - hN);
-  var cardio = 'Haftada ' + hN + ' HIIT' + (restC ? ' ve ' + restC + ' ' + (m.goal === 'kondisyon' ? 'uzun, sakin kardiyo (40–50 dk)' : 'orta tempo kardiyo (20–30 dk)') : '') + '. HIIT protokolleri haftalık planın altında.';
+  var fx = healthFx(m), lim = effLim(m);
+  var hN = hiitPerWeek(m), cN = goalMax(m, {yag:3, rekomp:2, kas:1, guc:1, kondisyon:3}), restC = Math.max(0, cN - hN);
+  var cardio = hN ? 'Haftada ' + hN + ' HIIT' + (restC ? ' ve ' + restC + ' ' + (hasGoal(m, 'kondisyon') ? 'uzun, sakin kardiyo (40–50 dk)' : 'orta tempo kardiyo (20–30 dk)') : '') + '. HIIT protokolleri haftalık planın altında.'
+    : 'Haftada ' + cN + ' gün konuşabilecek tempoda kardiyo (20–40 dk); sağlık durumu nedeniyle HIIT yok.';
   n.push(['', cardio]);
-  n.push(['', 'Protein gün içinde 4 öğüne bölünür; her öğünde ~' + Math.round(a.prot / 4 / 5) * 5 + ' g.']);
-  if (m.limits.length) n.push(['warn', 'Kısıtlanan bölge: ' + m.limits.map(function(l){ return LIMN[l]; }).join(', ') + '. Bu bölgeyi zorlayan hareketler çıkarıldı. Keskin ağrıda set biter.']);
+  if (fx.lvl >= 2) n.push(['warn', 'Sağlık durumu nedeniyle başlamadan önce hekim onayı alınmalı; ayrıntılar programın başındaki Sağlık durumu bölümünde.']);
+  if (!fx.hideKcal && !fx.noProt) n.push(['', 'Protein gün içinde 4 öğüne bölünür; her öğünde ~' + Math.round(a.prot / 4 / 5) * 5 + ' g.']);
+  if (lim.length) n.push(['warn', 'Kısıtlanan bölge: ' + lim.map(function(l){ return LIMN[l]; }).join(', ') + '. Bu bölgeyi zorlayan hareketler çıkarıldı. Keskin ağrıda set biter.']);
   if (m.age < 18) n.push(['warn', '18 yaş altı: program yetişkin hesaplarıyla yapıldı. Antrenör gözetimi ve teknik öncelikli.']);
   if (m.age >= 45 || a.bmi >= 35) n.push(['warn', 'Başlamadan önce hekim onayı alınması önerilir.']);
   if (a.bmi >= 30) n.push(['warn', 'Sıçramalı ve darbeli hareketler yok; kardiyo eklem dostu (eğimli yürüyüş, bisiklet).']);
-  if (m.sex === 'k' && (m.goal === 'yag' || m.goal === 'rekomp')) n.push(['', 'Adet düzeni bozulur ya da kesilirse kalori bakım düzeyine çıkarılır ve hekime gidilir.']);
+  if (m.sex === 'k' && !fx.hideKcal && !fx.preg && (hasGoal(m, 'yag') || hasGoal(m, 'rekomp'))) n.push(['', 'Adet düzeni bozulur ya da kesilirse kalori bakım düzeyine çıkarılır ve hekime gidilir.']);
   if (a.floored) n.push(['warn', 'Kalori, bazal metabolizmanın altına düşmesin diye yukarı çekildi.']);
   return '<ul class="notes">' + n.map(function(x){ return '<li class="' + x[0] + '">' + esc(x[1]) + '</li>'; }).join('') + '</ul>';
 }
@@ -1159,16 +1991,17 @@ function lowerReps(r){
 function periodHTML(m){
   var h = hardness(m);
   var mainEx = '6–10 → ' + lowerReps('6–10');
-  if (m.goal === 'guc') mainEx = '3–5 → ' + lowerReps('3–5');
-  if (m.goal === 'kondisyon') mainEx = '8–12 → 6–10';
-  var techTxt = (m.exp === 'bas' || h === 'sert') ? 'İzolasyonlarda son set tükenmeye kadar.' : 'İzolasyon teknikleri tam doz; ana hareketlerde son set 1 tekrar kala.';
+  var tg = tgOf(m), hcap = healthFx(m).cap;
+  if (tg === 'guc') mainEx = '3–5 → ' + lowerReps('3–5');
+  if (tg === 'kondisyon') mainEx = '8–12 → 6–10';
+  var techTxt = hcap ? 'Sağlık durumu nedeniyle hiçbir sette tükenmeye gidilmez; yük artışı küçük adımlarla.' : (m.exp === 'bas' || h === 'sert') ? 'İzolasyonlarda son set tükenmeye kadar.' : 'İzolasyon teknikleri tam doz; ana hareketlerde son set 1 tekrar kala.';
   var rows = [
     ['1–3', 'Birikim', 'Tablodaki reçete. 1. hafta hedef RIR\'a 1 tekrar ekle, ağırlıkları oturt.', ''],
     ['4', 'Hafifletme', 'Setler yarıya, yük %10 düşük, 3–4 tekrar kala bitir.', 'deload'],
     ['5–7', 'Yoğunlaşma', 'Ana hareketlerde tekrar aralığı düşer (' + mainEx + '), yük artar. Yardımcılar aynı.', ''],
     ['8', 'Hafifletme', 'Setler yarıya, yük %10 düşük.', 'deload'],
     ['9–11', 'Zirve', 'Ana hareketler tablodaki aralığa döner, ağırlıklar 1–3. haftanın üstünde. ' + techTxt, ''],
-    ['12', 'Test', 'Ana hareketlerde 5 tekrar maksimumu ölçülür, ölçüler yenilenir, program yeniden oluşturulur.', 'deload']
+    ['12', 'Test', hcap ? 'Maksimum test yapılmaz; aynı yükte tekrar sayısı ve algılanan zorluk karşılaştırılır, ölçüler yenilenir, program yeniden oluşturulur.' : 'Ana hareketlerde 5 tekrar maksimumu ölçülür, ölçüler yenilenir, program yeniden oluşturulur.', 'deload']
   ];
   return '<table class="plan"><thead><tr><th>Hafta</th><th>Blok</th><th>Ne değişir</th></tr></thead><tbody>' +
     rows.map(function(r){ return '<tr class="' + r[3] + '"><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('') + '</tbody></table>';
@@ -1179,7 +2012,7 @@ function rulesHTML(m, days){
   var top = first ? first.reps.split('–')[1] : '10';
   var warm = m.age >= 40 ? '8–10 dk hafif kardiyo ve kalça-omuz mobilitesi' : '5 dk hafif bisiklet ya da yürüyüş';
   return '<p><b>Ağırlık artırma.</b> Tekrar aralığının alt ucundan başla. Bütün setler aralığın üst ucuna, hedeflenen kalan tekrarla ulaşınca bir sonraki seansta yükü artır: barbell 2,5–5 kg, dumbbell 1–2 kg, makine bir kademe. Örnek: ' + esc(ex) + '; bütün setler ' + top + ' tekrara ulaşınca ağırlık artar.</p>' +
-    '<p><b>Kalan tekrar (RIR).</b> “1 tekrar kala bitir” demek: bir tekrar daha çıkardın ama ikincisi çıkmazdı. Ana hareketlerde tükenmeye gidilmez; makinede ve izolasyonda gidilebilir.</p>' +
+    '<p><b>Kalan tekrar (RIR).</b> “1 tekrar kala bitir” demek: bir tekrar daha çıkardın ama ikincisi çıkmazdı. ' + (healthFx(m).cap ? 'Sağlık durumu nedeniyle hiçbir harekette tükenmeye gidilmez; her set en az 2 tekrar kala biter ve nefes tutulmaz (kaldırırken nefes ver).' : 'Ana hareketlerde tükenmeye gidilmez; makinede ve izolasyonda gidilebilir.') + '</p>' +
     '<p><b>Isınma.</b> ' + warm + '. İlk ana harekette çalışma ağırlığının %40\'ı ile 8, %60\'ı ile 5, %80\'i ile 3 tekrar; sonraki hareketlere tek hafif setle geç.</p>' +
     '<p><b>Durunca.</b> Aynı yükte iki seans takılmak normal. Kuvvet iki hafta üst üste düşüyorsa önce uykuya, sonra kaloriye bak; gerekirse o hafta hafifletme yap.</p>';
 }
@@ -1192,9 +2025,11 @@ function readForm(){
     height: parseFloat($('height').value.replace(',', '.')),
     weight: parseFloat($('weight').value.replace(',', '.')),
     waist: parseFloat(($('waist').value || '').replace(',', '.')) || 0,
-    sex: F.sex, goal: F.goal, exp: F.exp, days: parseInt(F.days, 10), dur: parseInt(F.dur, 10),
-    focus: F.focus.slice(), eq: F.eq, limits: F.limits.slice(), hard: F.hard
+    sex: F.sex, goals: goalsOf({goals:F.goal}), exp: F.exp, days: parseInt(F.days, 10), dur: parseInt(F.dur, 10),
+    focus: F.focus.slice(), eq: F.eq, limits: F.limits.slice(), hard: F.hard,
+    health: F.health.slice(), hnote: ($('hnote').value || '').trim().slice(0, 160)
   };
+  m.goal = primaryGoal(m.goals);
   var e = '';
   if (!(m.age >= 14 && m.age <= 90)) e = 'Yaşı 14 ile 90 arasında gir.';
   else if (!(m.height >= 130 && m.height <= 225)) e = 'Boyu santimetre olarak gir (130–225).';
@@ -1249,8 +2084,19 @@ function planText(){
   var L = [];
   L.push('*Esra Dirlik · Professional Personal Trainer*');
   L.push((m.name || 'Üye') + ' · ' + (m.sex === 'k' ? 'Kadın' : 'Erkek') + ', ' + m.age + ' yaş, ' + m.height + ' cm, ' + m.weight + ' kg');
-  L.push('Hedef: ' + GOALN[m.goal] + ' · Sertlik: ' + HARDN[h]);
-  L.push('Günlük: ' + fmt(a.kcal) + ' kcal · Protein ' + a.prot + ' g · Yağ ' + a.fat + ' g · Karbonhidrat ' + a.carb + ' g · Su ' + fmt(a.water, 1) + ' L · Adım ' + a.steps);
+  L.push('Hedef: ' + goalsTxt(m) + ' · Sertlik: ' + HARDN[h]);
+  var hf = a.fx;
+  if (hf.n || m.hnote){
+    L.push('Sağlık: ' + (m.health || []).map(function(id){ return HCX[id] ? HCX[id].n : ''; }).filter(Boolean).concat(m.hnote ? [m.hnote] : []).join(', ') + (hf.lvl >= 0 ? ' — ' + HC_LVL[hf.lvl] : ''));
+    L.push('Dur sinyali: göğüs ağrısı, orantısız nefes darlığı, baş dönmesi, düzensiz kalp atışı, ani şiddetli baş ağrısı → antrenman biter; geçmezse 112.');
+  }
+  if (!hf.hideKcal){
+    var nb = ['Günlük: ' + fmt(a.kcal) + ' kcal'];
+    if (!hf.noProt) nb.push('Protein ' + a.prot + ' g', 'Yağ ' + a.fat + ' g', 'Karbonhidrat ' + a.carb + ' g');
+    if (!hf.noWater) nb.push('Su ' + fmt(a.water, 1) + ' L');
+    nb.push('Adım ' + a.steps);
+    L.push(nb.join(' · '));
+  }
   var mlist = measList();
   if (mlist.length) L.push('Son ölçüm (' + fmtD(mlist[0].d) + '): ' + MS.filter(function(s){ return mlist[0].v[s[0]] != null; }).map(function(s){ return s[1] + ' ' + fmtN(mlist[0].v[s[0]]); }).join(' · ') + ' cm');
   S.days.forEach(function(d){
@@ -1262,7 +2108,7 @@ function planText(){
     if (d.finisher) L.push('Bitiriş: ' + d.finisher);
   });
   var pk = hiitPicks(m, S.seed);
-  if (pk.list.length){
+  if (pk.list.length && hiitPerWeek(m)){
     L.push('');
     L.push('*HIIT* (haftada ' + hiitPerWeek(m) + ')');
     pk.list.forEach(function(P){
@@ -1306,7 +2152,7 @@ function membersSheet(){
   var list = store.get('members', []);
   var body = list.length ? list.map(function(r){
     var d = new Date(r.at), ml = sortMeas(store.get('meas:' + r.id, []));
-    return '<div class="mem"><div class="who"><b>' + esc(r.m.name || 'İsimsiz üye') + '</b><small>' + (r.m.sex === 'k' ? 'Kadın' : 'Erkek') + ', ' + r.m.age + ' yaş, ' + GOALN[r.m.goal] + ', ' + d.toLocaleDateString('tr-TR') + '</small>' +
+    return '<div class="mem"><div class="who"><b>' + esc(r.m.name || 'İsimsiz üye') + '</b><small>' + (r.m.sex === 'k' ? 'Kadın' : 'Erkek') + ', ' + r.m.age + ' yaş, ' + goalsTxt(r.m) + ((r.m.health || []).length ? ', ' + r.m.health.length + ' sağlık notu' : '') + ', ' + d.toLocaleDateString('tr-TR') + '</small>' +
       (ml.length ? '<small style="display:block;color:var(--champ)">Son ölçüm: ' + ago(ml[0].d) + ' (' + ml.length + ' kayıt)</small>' : '') + '</div>' +
       '<button class="ghost" data-load="' + r.id + '" type="button">Aç</button><button class="ghost" data-del="' + r.id + '" type="button">Sil</button></div>';
   }).join('') : '<p class="sub">Henüz kayıtlı üye yok. Bir program oluşturup “Üyeyi kaydet”e bas; bir dahaki sefere buradan tek dokunuşla açılır.</p>';
@@ -1318,7 +2164,7 @@ function loadMember(id){
   if (!r) return;
   var m = r.m;
   $('name').value = m.name || ''; $('age').value = m.age; $('height').value = m.height; $('weight').value = m.weight; $('waist').value = m.waist || '';
-  F.sex = m.sex; F.goal = m.goal; F.exp = m.exp; F.days = String(m.days); F.dur = String(m.dur); F.focus = m.focus.slice(); F.eq = m.eq; F.limits = m.limits.slice(); F.hard = m.hard;
+  F.sex = m.sex; F.goal = goalsOf(m); F.health = (m.health || []).slice(); $('hnote').value = m.hnote || ''; F.exp = m.exp; F.days = String(m.days); F.dur = String(m.dur); F.focus = m.focus.slice(); F.eq = m.eq; F.limits = m.limits.slice(); F.hard = m.hard;
   focusTouched = true; syncForm();
   S = {m:m, seed:r.seed || 0, swaps:r.swaps || {}, id:r.id, loadedId:r.id};
   S.days = generate(S.m, S.seed, S.swaps); S.a = analyse(S.m);
@@ -1710,7 +2556,7 @@ var ICON = {
 
 /* ---------- HIIT: adaptation ---------- */
 function bmiOf(m){ return m.weight / Math.pow(m.height / 100, 2); }
-function memberNoImp(m){ return bmiOf(m) >= 30 || m.age >= 55; }
+function memberNoImp(m){ return bmiOf(m) >= 30 || m.age >= 55 || healthFx(m).noImp; }
 function hKey(m){ return m ? (m.name || 'anonim').toLocaleLowerCase('tr-TR').replace(/\s+/g, '-') : 'genel'; }
 function hOk(mv, c){
   if (c.noImp && mv.im) return false;
@@ -1736,7 +2582,7 @@ function hHR(P, c){
   if (c.age){ var mx = Math.round(208 - 0.7 * c.age); return 'Hedef nabız ' + Math.round(mx * P.hr[0] / 100) + '–' + Math.round(mx * P.hr[1] / 100) + ' (maks. ~' + mx + ')'; }
   return 'Hedef nabız: maksimumun %' + P.hr[0] + '–' + P.hr[1] + '\'i';
 }
-function hCtxMember(m){ return {sex:m.sex, lim:m.limits, noImp:memberNoImp(m), age:m.age, m:m}; }
+function hCtxMember(m){ return {sex:m.sex, lim:effLim(m), noImp:memberNoImp(m), age:m.age, m:m}; }
 function hFind(id){ for (var i = 0; i < HP.length; i++) if (HP[i].id === id) return HP[i]; return HP[0]; }
 function mmss(s){ s = Math.max(0, s); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
 
@@ -1807,20 +2653,21 @@ function hMin(segs){ return Math.round(segs.reduce(function(a, s){ return a + (s
 
 /* ---------- HIIT: member section ---------- */
 function hiitPerWeek(m){
-  var n = {yag:2, kondisyon:2, rekomp:1, kas:1, guc:1}[m.goal];
-  if (m.exp === 'bas' || m.age >= 55 || bmiOf(m) >= 35) n = Math.min(n, 1);
+  var n = goalMax(m, {yag:2, kondisyon:2, rekomp:1, kas:1, guc:1}), fx = healthFx(m);
+  if (m.exp === 'bas' || m.age >= 55 || bmiOf(m) >= 35 || fx.hiit1) n = Math.min(n, 1);
+  if (fx.noHiit) n = 0;
   return n;
 }
 function hiitPicks(m, seed){
   var c = hCtxMember(m), bmi = bmiOf(m), h = hardness(m);
   var max = m.exp === 'bas' ? 1 : m.exp === 'orta' ? (h === 'sert' ? 2 : 3) : 3;
-  if (m.age >= 55 || bmi >= 35) max = 1; else if (bmi >= 30 || m.age >= 45) max = Math.min(max, 2);
+  if (m.age >= 55 || bmi >= 35 || healthFx(m).hiit1) max = 1; else if (bmi >= 30 || m.age >= 45) max = Math.min(max, 2);
   var target = Math.min(max, h === 'sert' ? 2 : 3);
   var ok = HP.filter(function(P){
     if (EQ[P.eq] > EQ[m.eq] || P.lvl > max) return false;
     return hMoves(P, c).every(function(x){ return EQ[x.mv.eq] <= EQ[m.eq]; });
   });
-  var order = {yag:['devre','kuvvet','kardiyo'], rekomp:['kuvvet','devre','kardiyo'], kas:['kardiyo','kuvvet','devre'], guc:['kardiyo','kuvvet','devre'], kondisyon:['kardiyo','devre','kuvvet']}[m.goal];
+  var order = {yag:['devre','kuvvet','kardiyo'], rekomp:['kuvvet','devre','kardiyo'], kas:['kardiyo','kuvvet','devre'], guc:['kardiyo','kuvvet','devre'], kondisyon:['kardiyo','devre','kuvvet']}[pgOf(m)];
   var picks = [];
   order.forEach(function(cat){
     var list = ok.filter(function(P){ return P.cat === cat && picks.indexOf(P) < 0; });
@@ -1831,8 +2678,9 @@ function hiitPicks(m, seed){
   return {c:c, list:picks.slice(0, 3)};
 }
 function hiitSecHTML(m){
-  var n = hiitPerWeek(m), pk = hiitPicks(m, S.seed), adapt = [];
-  if (m.limits.length) adapt.push(m.limits.map(function(l){ return LIMN[l]; }).join(', ') + ' kısıtına göre hareketler değiştirildi');
+  var n = hiitPerWeek(m), pk = hiitPicks(m, S.seed), adapt = [], lim = effLim(m);
+  if (!n) return '<div class="sec"><h3>HIIT</h3><p class="sub">Sağlık durumu nedeniyle HIIT bu üyeye önerilmiyor. Kardiyo günlerinde konuşabilecek tempoda (6–20 ölçeğinde algılanan zorluk 11–13) 20–40 dk yürüyüş, bisiklet ya da eliptik yapılır; hekim izin verirse yoğunluk kademeli artırılır.</p></div>';
+  if (lim.length) adapt.push(lim.map(function(l){ return LIMN[l]; }).join(', ') + ' kısıtına göre hareketler değiştirildi');
   if (memberNoImp(m)) adapt.push('zıplamalı hareketler çıkarıldı');
   var html = '<div class="sec"><h3>HIIT</h3><p class="sub">Haftada ' + n + ' kez; plandaki HIIT gününde ya da kısa bir protokol olarak ağırlık antrenmanından sonra. Mümkünse ağır bacak gününden önceki güne konmaz. ' +
     'Aşağıdakiler hedefe, ekipmana ve sertliğe göre seçilen ' + (m.sex === 'k' ? 'kadın' : 'erkek') + ' versiyonları' + (adapt.length ? '. ' + adapt.join(', ').replace(/^./, function(ch){ return ch.toLocaleUpperCase('tr-TR'); }) : '') + '.</p>';
@@ -1872,7 +2720,7 @@ function hCardHTML(P, i, c, mini){
 var HL = null;
 function hCtxLib(){
   var m = HL.useMember && S ? S.m : null;
-  return {sex:HL.sex, lim:m ? m.limits : [], noImp:HL.noImp, age:m ? m.age : 0, m:m};
+  return {sex:HL.sex, lim:m ? effLim(m) : [], noImp:HL.noImp, age:m ? m.age : 0, m:m};
 }
 function openHiit(){
   if (HL) return;
@@ -1894,7 +2742,7 @@ function renderHL(){
     chip('noImp', '1', 'Darbesiz', HL.noImp) + '</div>';
   if (c.m){
     var bits = [];
-    if (c.m.limits.length) bits.push(c.m.limits.map(function(l){ return LIMN[l]; }).join(', ') + ' kısıtına göre hareketler değiştirildi');
+    if (effLim(c.m).length) bits.push(effLim(c.m).map(function(l){ return LIMN[l]; }).join(', ') + ' kısıtına göre hareketler değiştirildi');
     if (HL.noImp) bits.push('zıplamalar çıkarıldı');
     bits.push('nabız hedefleri yaşına göre');
     html += '<div class="hbanner"><span><b>' + esc(c.m.name || 'Bu üye') + '</b> için: ' + bits.join('; ') + '.</span><button class="ghost" data-hl="generic" type="button">Genel görünüm</button></div>';
